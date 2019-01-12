@@ -63,6 +63,7 @@ export class ForceDirectedGraph {
       throw new Error('missing options when initializing simulation');
     }
 
+    /** Creating the simulation */
     if (!this.simulation) {
       const ticker = this.ticker;
 
@@ -77,6 +78,7 @@ export class ForceDirectedGraph {
             .radius(d => d['r'] + 5).iterations(2)
         );
 
+      // Connecting the d3 ticker to an angular event emitter
       this.simulation.on('tick', function () {
         ticker.emit(this);
       });
@@ -85,8 +87,10 @@ export class ForceDirectedGraph {
       this.initLinks();
     }
 
+    /** Updating the central force of the simulation */
     this.simulation.force('centers', d3.forceCenter(options.width / 2, options.height / 2));
 
+    /** Restarting the simulation internal timer */
     this.simulation.restart();
   }
 }

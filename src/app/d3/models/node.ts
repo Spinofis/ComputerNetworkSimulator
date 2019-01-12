@@ -1,6 +1,8 @@
-import { NodeType } from 'src/app/shared/enums/node-type';
+import APP_CONFIG from "../../app.config";
+import { NodeType } from "src/app/shared/enums/node-type";
+import { NodeColors } from "src/app/shared/enums/node-color";
 
-export class Node implements d3.SimulationNodeDatum {
+export abstract class Node implements d3.SimulationNodeDatum {
   index?: number;
   x?: number;
   y?: number;
@@ -8,30 +10,27 @@ export class Node implements d3.SimulationNodeDatum {
   vy?: number;
   fx?: number | null;
   fy?: number | null;
-  nodeType: NodeType;
 
   id: string;
   linkCount: number = 0;
 
-  constructor(id, nodeType: NodeType) {
+  constructor(id) {
     this.id = id;
-    this.nodeType = nodeType;
   }
 
-  // normal = () => {
-  //   return Math.sqrt(this.linkCount / APP_CONFIG.N);
-  // };
+  public getR() {
+    alert("method should be overriden");
+  }
 
-  // get r() {
-  //   return 50 * this.normal() + 10;
-  // }
+  public getFontSize() {
+    alert("method should be overriden");
+  }
 
-  // get fontSize() {
-  //   return 30 * this.normal() + 10 + "px";
-  // }
+  public getColor() {
+    alert("method should be overriden");
+  }
 
-  // get color() {
-  //   let index = Math.floor(APP_CONFIG.SPECTRUM.length * this.normal());
-  //   return APP_CONFIG.SPECTRUM[index];
-  // }
+  public getSuffix() {
+    alert("method should be overriden");
+  }
 }

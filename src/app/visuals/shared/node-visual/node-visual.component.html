@@ -1,0 +1,15 @@
+<svg:g
+  [attr.transform]="'translate(' + node.x + ',' + node.y + ')'"
+  (click)="myFunc()"
+>
+  <svg:circle
+    class="node"
+    [attr.fill]="node.getColor()"
+    cx="0"
+    cy="0"
+    [attr.r]="node.getR()"
+  ></svg:circle>
+  <svg:text class="node-name" [attr.font-size]="node.getFontSize()">
+    {{ node.getSuffix() + node.id }}
+  </svg:text>
+</svg:g>

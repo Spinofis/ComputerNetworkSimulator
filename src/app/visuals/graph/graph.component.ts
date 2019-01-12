@@ -4,7 +4,7 @@ import { D3Service, ForceDirectedGraph, Node } from '../../d3';
 @Component({
   selector: 'graph',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl:"./graph.component.html" ,
+  templateUrl:"./graph.component.html",
   styleUrls: ['./graph.component.scss']
 })
 export class GraphComponent implements OnInit, AfterViewInit {
@@ -23,7 +23,6 @@ export class GraphComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.graph = this.d3Service.getForceDirectedGraph(this.nodes, this.links, this.options);
-
 
     this.graph.ticker.subscribe((d) => {
       this.ref.markForCheck();
