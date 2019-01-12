@@ -1,30 +1,41 @@
-import { Component, Input, ChangeDetectorRef, HostListener, ChangeDetectionStrategy, OnInit, AfterViewInit } from '@angular/core';
-import { D3Service, ForceDirectedGraph, Node } from '../../d3';
+import {
+  Component,
+  Input,
+  ChangeDetectorRef,
+  HostListener,
+  ChangeDetectionStrategy,
+  OnInit,
+  AfterViewInit
+} from "@angular/core";
+import { D3Service, ForceDirectedGraph, Node } from "../../d3";
 
 @Component({
-  selector: 'graph',
+  selector: "graph",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl:"./graph.component.html",
-  styleUrls: ['./graph.component.scss']
+  templateUrl: "./graph.component.html",
+  styleUrls: ["./graph.component.scss"]
 })
 export class GraphComponent implements OnInit, AfterViewInit {
-  @Input('nodes') nodes;
-  @Input('links') links;
-  graph: ForceDirectedGraph;
-  private _options: { width, height } = { width: 800, height: 600 };
+  @Input("nodes") nodes;
+  @Input("links") links;
+  public graph: ForceDirectedGraph;
+  private _options: { width; height } = { width: 800, height: 600 };
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener("window:resize", ["$event"])
   onResize(event) {
     this.graph.initSimulation(this.options);
   }
 
-
   constructor(private d3Service: D3Service, private ref: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.graph = this.d3Service.getForceDirectedGraph(this.nodes, this.links, this.options);
+    this.graph = this.d3Service.getForceDirectedGraph(
+      this.nodes,
+      this.links,
+      this.options
+    );
 
-    this.graph.ticker.subscribe((d) => {
+    this.graph.ticker.subscribe(d => {
       this.ref.markForCheck();
     });
   }
@@ -34,9 +45,13 @@ export class GraphComponent implements OnInit, AfterViewInit {
   }
 
   get options() {
-    return this._options = {
+    return (this._options = {
       width: window.innerWidth,
       height: window.innerHeight
-    };
+    });
+  }
+
+  public recreateLinks() {
+    this.graph.initLinks();
   }
 }
