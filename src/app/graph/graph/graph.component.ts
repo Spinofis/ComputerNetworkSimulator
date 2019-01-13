@@ -7,12 +7,12 @@ import {
   OnInit,
   AfterViewInit
 } from "@angular/core";
-import { GraphEditMode } from "src/app/shared/enums/graph-edit-mode";
 import { GraphService } from "../shared/services/graph-service";
 import { Link } from "../shared/model/d3/link";
 import { ForceDirectedGraph } from "../shared/model/d3/force-directed-graph";
 import { Node } from "../shared/model/d3/node";
 import { D3Service } from "../shared/services/d3.service";
+import { GraphEditMode } from "../shared/enums/graph-edit-mode";
 
 @Component({
   selector: "graph",
@@ -25,7 +25,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
   @Input("links") links: Link[];
   public graph: ForceDirectedGraph;
   private _options: { width; height } = { width: 800, height: 600 };
-  graphEditMode: GraphEditMode = GraphEditMode.none;
+  graphEditMode: GraphEditMode = GraphEditMode.deleteLinks;
   clickedNode1: Node;
   clickedNode2: Node;
 
@@ -67,23 +67,28 @@ export class GraphComponent implements OnInit, AfterViewInit {
     this.graph.initLinks();
   }
 
-  // public stopSimulation() {
-  //   // this.graph.simulation.stop();
-  // }
+  onNodeClicked(e) {
+    (e as Node).selectNode();
+    if (!this.clickedNode1) this.clickedNode1 = e;
+    else if (!this.clickedNode2) {
+      this.clickedNode2 = e;
+      this.graphService.editGraph(
+        this.clickedNode1,
+        this.clickedNode2,
+        this.graphEditMode,
+        this.nodes,
+        this.links
+      );
+      this.recreateLinks();
+      setTimeout(() => {
+        this.deselectEditedNodes();
+        this.clickedNode1 = this.clickedNode2 = null;
+      }, 100);
+    }
+  }
 
-  // public restartSimulation() {
-  //   this.graph = this.d3Service.getForceDirectedGraph(
-  //     this.nodes,
-  //     this.links,
-  //     this.options
-  //   );
-
-  //   this.graph.ticker.subscribe(d => {
-  //     this.ref.markForCheck();
-  //   });
-
-  //   this.graph.initSimulation(this.options);
-  // }
-
-  onNodeClicked(e) {}
+  deselectEditedNodes() {
+    this.clickedNode1.deselectNode();
+    this.clickedNode2.deselectNode();
+  }
 }

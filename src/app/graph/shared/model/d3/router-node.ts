@@ -1,5 +1,5 @@
 import { Node } from "./node";
-import { NodeColor } from "src/app/shared/enums/node-color";
+import { NodeColor } from '../../enums/node-color';
 
 export class RouterNode extends Node {
   radius: number = 90;

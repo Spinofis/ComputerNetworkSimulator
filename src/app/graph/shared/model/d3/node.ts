@@ -1,4 +1,4 @@
-import { NodeColor } from "src/app/shared/enums/node-color";
+import { NodeColor } from '../../enums/node-color';
 
 export abstract class Node implements d3.SimulationNodeDatum {
   index?: number;
