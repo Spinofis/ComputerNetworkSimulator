@@ -9,6 +9,7 @@ import {
 } from "@angular/core";
 import { D3Service, ForceDirectedGraph, Node, Link } from "../../d3";
 import { GraphEditMode } from "src/app/shared/enums/graph-edit-mode";
+import { GraphService } from "../shared/services/graph-service";
 
 @Component({
   selector: "graph",
@@ -30,7 +31,11 @@ export class GraphComponent implements OnInit, AfterViewInit {
     this.graph.initSimulation(this.options);
   }
 
-  constructor(private d3Service: D3Service, private ref: ChangeDetectorRef) {}
+  constructor(
+    private d3Service: D3Service,
+    private graphService: GraphService,
+    private ref: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.graph = this.d3Service.getForceDirectedGraph(
@@ -77,13 +82,6 @@ export class GraphComponent implements OnInit, AfterViewInit {
   //   this.graph.initSimulation(this.options);
   // }
 
-  onNodeClicked(e) {
-    // if (this.graphEditMode == GraphEditMode.addLink) {
-    //   if(this.clickedNode1 )
-    // }
-  }
+  onNodeClicked(e) {}
 
-  addLink() {
-
-  }
 }

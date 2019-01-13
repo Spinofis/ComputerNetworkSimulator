@@ -1,5 +1,6 @@
 export enum GraphEditMode {
-  deleteLink,
-  addLink,
+  deleteLinks,
+  addLinks,
+  deleteNodes,
   none
 }
