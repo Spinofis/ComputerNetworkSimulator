@@ -7,7 +7,8 @@ import {
   OnInit,
   AfterViewInit
 } from "@angular/core";
-import { D3Service, ForceDirectedGraph, Node } from "../../d3";
+import { D3Service, ForceDirectedGraph, Node, Link } from "../../d3";
+import { GraphEditMode } from "src/app/shared/enums/graph-edit-mode";
 
 @Component({
   selector: "graph",
@@ -16,10 +17,13 @@ import { D3Service, ForceDirectedGraph, Node } from "../../d3";
   styleUrls: ["./graph.component.scss"]
 })
 export class GraphComponent implements OnInit, AfterViewInit {
-  @Input("nodes") nodes;
-  @Input("links") links;
+  @Input("nodes") nodes: Node[];
+  @Input("links") links: Link[];
   public graph: ForceDirectedGraph;
   private _options: { width; height } = { width: 800, height: 600 };
+  graphEditMode: GraphEditMode = GraphEditMode.none;
+  clickedNode1: Node;
+  clickedNode2: Node;
 
   @HostListener("window:resize", ["$event"])
   onResize(event) {
@@ -53,5 +57,33 @@ export class GraphComponent implements OnInit, AfterViewInit {
 
   public recreateLinks() {
     this.graph.initLinks();
+  }
+
+  // public stopSimulation() {
+  //   // this.graph.simulation.stop();
+  // }
+
+  // public restartSimulation() {
+  //   this.graph = this.d3Service.getForceDirectedGraph(
+  //     this.nodes,
+  //     this.links,
+  //     this.options
+  //   );
+
+  //   this.graph.ticker.subscribe(d => {
+  //     this.ref.markForCheck();
+  //   });
+
+  //   this.graph.initSimulation(this.options);
+  // }
+
+  onNodeClicked(e) {
+    // if (this.graphEditMode == GraphEditMode.addLink) {
+    //   if(this.clickedNode1 )
+    // }
+  }
+
+  addLink() {
+
   }
 }

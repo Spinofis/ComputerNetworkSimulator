@@ -4,6 +4,7 @@
     <g
       [nodeVisual]="node"
       *ngFor="let node of nodes"
+      (onNodeCliked)="onNodeClicked($event)"
       [draggableNode]="node"
       [draggableInGraph]="graph"
     ></g>

@@ -1,6 +1,4 @@
-import APP_CONFIG from "../../app.config";
-import { NodeType } from "src/app/shared/enums/node-type";
-import { NodeColors } from "src/app/shared/enums/node-color";
+import { NodeColor } from "src/app/shared/enums/node-color";
 
 export abstract class Node implements d3.SimulationNodeDatum {
   index?: number;
@@ -13,6 +11,8 @@ export abstract class Node implements d3.SimulationNodeDatum {
 
   id: string;
   linkCount: number = 0;
+  nodeColor: NodeColor;
+  isSelected: boolean = false;
 
   constructor(id) {
     this.id = id;
@@ -31,6 +31,15 @@ export abstract class Node implements d3.SimulationNodeDatum {
   }
 
   public getSuffix() {
+    alert("method should be overriden");
+  }
+
+  public selectNode() {
+    this.isSelected = true;
+    this.nodeColor = NodeColor.selectedNode;
+  }
+
+  public deselectNode() {
     alert("method should be overriden");
   }
 }

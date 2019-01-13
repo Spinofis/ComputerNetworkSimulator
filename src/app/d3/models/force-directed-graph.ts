@@ -67,6 +67,7 @@ export class ForceDirectedGraph {
     if (!this.simulation) {
       const ticker = this.ticker;
 
+
       this.simulation = d3.forceSimulation()
         .force('charge',
           d3.forceManyBody()

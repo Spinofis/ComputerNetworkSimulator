@@ -1,15 +1,16 @@
 import { Node } from "./node";
-import { NodeColors } from "src/app/shared/enums/node-color";
+import { NodeColor } from "src/app/shared/enums/node-color";
 
 export class RouterNode extends Node {
   radius: number = 90;
+  nodeColor = NodeColor.router;
 
   constructor(id) {
     super(id);
   }
 
   public getColor() {
-    return NodeColors.router;
+    return this.nodeColor;
   }
 
   public getSuffix() {
@@ -22,5 +23,10 @@ export class RouterNode extends Node {
 
   public getFontSize() {
     return this.radius / 2 + "px";
+  }
+
+  public deselectNode() {
+    this.isSelected = false;
+    this.nodeColor = NodeColor.router;
   }
 }
