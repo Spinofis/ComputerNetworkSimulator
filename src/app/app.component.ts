@@ -1,8 +1,11 @@
 import { Component, ViewChild } from "@angular/core";
-import { Node, Link } from "./d3";
-import { PcNode } from "./d3/models/pc-node";
-import { RouterNode } from "./d3/models/router-node";
-import { GraphComponent } from "./visuals/graph/graph.component";
+import { GraphComponent } from './graph/graph/graph.component';
+import { Link } from './graph/shared/model/d3/link';
+import { Node } from './graph/shared/model/d3/node';
+import { PcNode } from './graph/shared/model/d3/pc-node';
+import { RouterNode } from './graph/shared/model/d3/router-node';
+
+
 
 @Component({
   selector: "app-root",
@@ -15,6 +18,7 @@ export class AppComponent {
 
   nodes: Node[] = [];
   links: Link[] = [];
+  
 
   constructor() {
     let node1: Node = new PcNode(0);

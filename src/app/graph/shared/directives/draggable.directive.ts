@@ -1,6 +1,7 @@
 import { Directive, Input, ElementRef, OnInit } from '@angular/core';
-import { Node, ForceDirectedGraph } from '../models';
-import { D3Service } from '../d3.service';
+import { Node } from '../model/d3/node';
+import { ForceDirectedGraph } from '../model/d3/force-directed-graph';
+import { D3Service } from '../services/d3.service';
 
 @Directive({
     selector: '[draggableNode]'

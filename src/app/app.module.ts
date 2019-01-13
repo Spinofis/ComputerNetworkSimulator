@@ -4,20 +4,12 @@ import { NgModule } from "@angular/core";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { UiModule } from "./ui/ui.module";
-import { SHARED_VISUALS } from "./visuals/shared";
-import { D3_DIRECTIVES, D3Service } from "./d3";
-import { GraphComponent } from "./visuals/graph/graph.component";
-import { GraphService } from "./visuals/shared/services/graph-service";
+import { GraphModule } from "./graph/graph.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    GraphComponent,
-    ...SHARED_VISUALS,
-    ...D3_DIRECTIVES
-  ],
-  imports: [BrowserModule, AppRoutingModule, UiModule],
-  providers: [D3Service, GraphService],
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, UiModule, GraphModule],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

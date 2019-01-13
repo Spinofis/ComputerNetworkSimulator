@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output } from "@angular/core";
-import { Node } from "../../d3";
+import { Node } from "../shared/model/d3/node";
 
 @Component({
   selector: "[nodeVisual]",

@@ -7,9 +7,12 @@ import {
   OnInit,
   AfterViewInit
 } from "@angular/core";
-import { D3Service, ForceDirectedGraph, Node, Link } from "../../d3";
 import { GraphEditMode } from "src/app/shared/enums/graph-edit-mode";
 import { GraphService } from "../shared/services/graph-service";
+import { Link } from "../shared/model/d3/link";
+import { ForceDirectedGraph } from "../shared/model/d3/force-directed-graph";
+import { Node } from "../shared/model/d3/node";
+import { D3Service } from "../shared/services/d3.service";
 
 @Component({
   selector: "graph",
@@ -83,5 +86,4 @@ export class GraphComponent implements OnInit, AfterViewInit {
   // }
 
   onNodeClicked(e) {}
-
 }

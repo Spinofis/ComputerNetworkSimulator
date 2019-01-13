@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { Node, Link } from "src/app/d3";
+import { Link } from "../model/d3/link";
+import { Node } from "../model/d3/node";
 
 @Injectable()
 export class GraphService {
