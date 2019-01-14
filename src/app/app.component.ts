@@ -31,12 +31,5 @@ export class AppComponent {
     let link2 = new Link(2, 1);
     this.links.push(link1);
     this.links.push(link2);
-
-    setTimeout(() => {
-      // this.links.splice(this.links.indexOf(link1), 1);
-      // this.nodes.splice(this.nodes.indexOf(node1), 1);
-      // this.graph.links = this.links;
-      // this.graph.recreateLinks();
-    }, 3000);
   }
 }
