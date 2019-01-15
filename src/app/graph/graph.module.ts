@@ -8,6 +8,7 @@ import { ZoomableDirective } from "./shared/directives/zoomable.directive";
 import { LinkVisualComponent } from "./link-visual/link-visual.component";
 import { NodeVisualComponent } from "./node-visual/node-visual.component";
 import { CommonModule } from "@angular/common";
+import { GraphMenu } from "./graph-menu/graph-menu.component";
 
 @NgModule({
   imports: [GraphRoutingModule, CommonModule],
@@ -16,7 +17,8 @@ import { CommonModule } from "@angular/common";
     LinkVisualComponent,
     NodeVisualComponent,
     DraggableDirective,
-    ZoomableDirective
+    ZoomableDirective,
+    GraphMenu
   ],
   providers: [D3Service, GraphService],
   exports: [

@@ -25,7 +25,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
   @Input("links") links: Link[];
   public graph: ForceDirectedGraph;
   private _options: { width; height } = { width: 800, height: 600 };
-  graphEditMode: GraphEditMode = GraphEditMode.deleteNodes;
+  graphEditMode: GraphEditMode = GraphEditMode.none;
   clickedNode1: Node;
   clickedNode2: Node;
   clickedNodeCount: number = 0;
@@ -69,13 +69,15 @@ export class GraphComponent implements OnInit, AfterViewInit {
   }
 
   onNodeClicked(e) {
-    (e as Node).selectNode();
-    if (!this.clickedNode1) {
-      this.clickedNode1 = e;
-      this.clickedNodeCount++;
-    } else if (!this.clickedNode2) {
-      this.clickedNode2 = e;
-      this.clickedNodeCount++;
+    if (this.graphEditMode != GraphEditMode.none) {
+      (e as Node).selectNode();
+      if (!this.clickedNode1) {
+        this.clickedNode1 = e;
+        this.clickedNodeCount++;
+      } else if (!this.clickedNode2) {
+        this.clickedNode2 = e;
+        this.clickedNodeCount++;
+      }
     }
 
     switch (this.graphEditMode) {
@@ -130,5 +132,17 @@ export class GraphComponent implements OnInit, AfterViewInit {
       this.clickedNode2 = null;
       this.clickedNodeCount = 0;
     }, 100);
+  }
+
+  onGraphEditModeChange(e) {
+    this.graphEditMode = e;
+  }
+
+  onAddPc(e) {
+    console.log(e);
+  }
+
+  onAddRouter(e) {
+    console.log(e);
   }
 }

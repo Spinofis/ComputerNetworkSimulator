@@ -1,3 +1,8 @@
+<app-graph-menu
+  (graphEditModeChange)="onGraphEditModeChange($event)"
+  (addPc)="onAddPc($event)"
+  (addRouter)="onAddRouter($event)"
+></app-graph-menu>
 <svg #svg [attr.width]="_options.width" [attr.height]="_options.height">
   <g [zoomableOf]="svg">
     <g [linkVisual]="link" *ngFor="let link of links"></g>

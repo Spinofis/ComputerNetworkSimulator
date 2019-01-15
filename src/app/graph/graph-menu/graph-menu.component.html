@@ -1,0 +1,31 @@
+<div class="sidebar">
+  <div class="item" tabindex="1" (click)="addRouter_Click()">Dodaj router</div>
+  <div class="item" tabindex="2" (click)="addPc_Click()">Dodaj pc</div>
+  <div class="item" tabindex="3" (click)="cbDeleteDevices_Click()">
+    Usuwanie urządzeń
+    <input
+      id="cbDeleteDevices"
+      type="checkbox"
+      value="isDeleatingDevices"
+      [checked]="isDeleatingDevices"
+    />
+  </div>
+  <div class="item" tabindex="4" (click)="cbAddLinks_Click()">
+    Dodawanie połączeń
+    <input
+      id="cbAddLinks"
+      type="checkbox"
+      value="isAddingLinks"
+      [checked]="isAddingLinks"
+    />
+  </div>
+  <div class="item" tabindex="5" (click)="cbDeleatingLinks_Click()">
+    Usuwanie połączeń
+    <input
+      id="cbDeleatingLinks"
+      type="checkbox"
+      value="isDeleatingLinks"
+      [checked]="isDeleatingLinks"
+    />
+  </div>
+</div>
