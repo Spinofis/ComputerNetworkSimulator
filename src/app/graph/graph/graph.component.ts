@@ -13,6 +13,8 @@ import { ForceDirectedGraph } from "../shared/model/d3/force-directed-graph";
 import { Node } from "../shared/model/d3/node";
 import { D3Service } from "../shared/services/d3.service";
 import { GraphEditMode } from "../shared/enums/graph-edit-mode";
+import { PcNode } from "../shared/model/d3/pc-node";
+import { RouterNode } from "../shared/model/d3/router-node";
 
 @Component({
   selector: "graph",
@@ -42,6 +44,10 @@ export class GraphComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
+    this.preapreSimulation();
+  }
+
+  preapreSimulation() {
     this.graph = this.d3Service.getForceDirectedGraph(
       this.nodes,
       this.links,
@@ -139,10 +145,36 @@ export class GraphComponent implements OnInit, AfterViewInit {
   }
 
   onAddPc(e) {
-    console.log(e);
+    this.graph.simulation.stop();
+    if (!this.nodes) this.nodes = [];
+    let pcNumber: number = this.nodes.length + 1;
+    let newNodes: Node[] = [];
+    this.nodes.forEach(element => {
+      newNodes.push(element);
+    });
+    newNodes.push(new PcNode(pcNumber));
+    this.nodes = [];
+    this.restartGraphAfterNodeAdd(newNodes);
   }
 
   onAddRouter(e) {
-    console.log(e);
+    this.graph.simulation.stop();
+    if (!this.nodes) this.nodes = [];
+    let routerNumber: number = this.nodes.length + 1;
+    let newNodes: Node[] = [];
+    this.nodes.forEach(element => {
+      newNodes.push(element);
+    });
+    newNodes.push(new RouterNode(routerNumber));
+    this.nodes = [];
+    this.restartGraphAfterNodeAdd(newNodes);
+  }
+
+  private restartGraphAfterNodeAdd(newNodes: Node[]) {
+    setTimeout(() => {
+      this.nodes = newNodes;
+      this.preapreSimulation();
+      this.graph.initSimulation(this.options);
+    }, 50);
   }
 }
