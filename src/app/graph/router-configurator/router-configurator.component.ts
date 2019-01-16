@@ -49,12 +49,9 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
       let routerConfiguration: RouterConfiguration = new RouterConfiguration();
       routerConfiguration.interfaces = [];
       this.gridDataSource.forEach(element => {
-        routerConfiguration.interfaces.push({
-          connectionName: element.interface,
-          ip: element.ip,
-          mask: element.mask,
-          nodeConnectedToId: element.hostId
-        });
+        routerConfiguration.interfaces.push(
+          this.gridObjectToRouterInterface(element)
+        );
       });
       this.node.setConfiguration(routerConfiguration);
       this.activeModal.close();
@@ -75,22 +72,47 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
     let routerConfiguration: RouterConfiguration = node.getConfiguration();
     if (routerConfiguration) {
       routerConfiguration.interfaces.forEach(element => {
-        this.gridDataSource.push({
-          hostId: element.nodeConnectedToId,
-          interface: element.connectionName,
-          ip: element.ip,
-          mask: element.mask
-        });
+        if (!node.connectedNodes.find(x => x.id == element.nodeConnectedToId))
+          routerConfiguration.interfaces.splice(
+            routerConfiguration.interfaces.indexOf(element, 1)
+          );
+      });
+
+      routerConfiguration.interfaces.forEach(element => {
+        this.gridDataSource.push(this.routerInterfaceToGridObject(element));
       });
     }
+
     node.connectedNodes.forEach(element => {
       if (!this.gridDataSource.find(x => x.hostId == element.id))
-        this.gridDataSource.push({
-          hostId: element.id,
-          interface: node.getName() + " / " + element.getName(),
-          ip: "",
-          mask: ""
-        });
+        this.gridDataSource.push(this.getEmptyGridObject(node, element));
     });
+  }
+
+  private getEmptyGridObject(node: Node, connectedNode: Node) {
+    return {
+      hostId: connectedNode.id,
+      interface: node.getName() + " / " + connectedNode.getName(),
+      ip: "",
+      mask: ""
+    };
+  }
+
+  private routerInterfaceToGridObject(routerInterface: RouterInterface) {
+    return {
+      hostId: routerInterface.nodeConnectedToId,
+      interface: routerInterface.connectionName,
+      ip: routerInterface.ip,
+      mask: routerInterface.mask
+    };
+  }
+
+  private gridObjectToRouterInterface(gridObject) {
+    return {
+      connectionName: gridObject.interface,
+      ip: gridObject.ip,
+      mask: gridObject.mask,
+      nodeConnectedToId: gridObject.hostId
+    };
   }
 }

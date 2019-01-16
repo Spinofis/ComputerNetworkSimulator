@@ -21,14 +21,14 @@ export class AppComponent {
   
 
   constructor() {
-    let node1: Node = new PcNode(1);
-    let node2: Node = new RouterNode(2);
-    this.nodes.push(node1);
-    this.nodes.push(node2);
+    // let node1: Node = new PcNode(1);
+    // let node2: Node = new RouterNode(2);
+    // this.nodes.push(node1);
+    // this.nodes.push(node2);
     // this.nodes.push(node3);
-    let link1 = new Link(1, 2);
+    // let link1 = new Link(1, 2);
     // let link2 = new Link(2, 1);
-    this.links.push(link1);
+    // this.links.push(link1);
     // this.links.push(link2);
 
     // setTimeout(() => {
