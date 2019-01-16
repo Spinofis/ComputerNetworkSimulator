@@ -127,6 +127,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
       case GraphEditMode.hostConfiguration: {
         (e as Node).deselectNode();
         this.configurateHost(e);
+        this.afterGraphEdit();
         break;
       }
       default: {
