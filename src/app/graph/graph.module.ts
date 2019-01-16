@@ -9,24 +9,38 @@ import { LinkVisualComponent } from "./link-visual/link-visual.component";
 import { NodeVisualComponent } from "./node-visual/node-visual.component";
 import { CommonModule } from "@angular/common";
 import { GraphMenu } from "./graph-menu/graph-menu.component";
+import { PcConfiguratorComponent } from "./pc-configurator/pc-configurator.component";
+import { RouterConfiguratorComponent } from "./router-configurator/router-configurator.component";
+import { NetworkService } from "./shared/services/network-service";
+import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
+import { ValidatorService } from "./shared/services/validator-service";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
-  imports: [GraphRoutingModule, CommonModule],
+  imports: [
+    GraphRoutingModule,
+    CommonModule,
+    NgbModalModule,
+    ReactiveFormsModule
+  ],
   declarations: [
     GraphComponent,
     LinkVisualComponent,
     NodeVisualComponent,
     DraggableDirective,
     ZoomableDirective,
-    GraphMenu
+    GraphMenu,
+    PcConfiguratorComponent,
+    RouterConfiguratorComponent
   ],
-  providers: [D3Service, GraphService],
+  providers: [D3Service, GraphService, NetworkService, ValidatorService],
   exports: [
     GraphComponent,
     LinkVisualComponent,
     NodeVisualComponent,
     DraggableDirective,
     ZoomableDirective
-  ]
+  ],
+  entryComponents: [PcConfiguratorComponent, RouterConfiguratorComponent]
 })
 export class GraphModule {}

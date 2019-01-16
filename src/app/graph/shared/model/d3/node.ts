@@ -1,6 +1,8 @@
-import { NodeColor } from '../../enums/node-color';
+import { NodeColor } from "../../enums/node-color";
+import { Host } from "../../interfaces/host";
+import { HostConfiguration } from "../../abstract/host-configuration";
 
-export abstract class Node implements d3.SimulationNodeDatum {
+export abstract class Node implements d3.SimulationNodeDatum, Host {
   index?: number;
   x?: number;
   y?: number;
@@ -18,28 +20,24 @@ export abstract class Node implements d3.SimulationNodeDatum {
     this.id = id;
   }
 
-  public getR() {
-    alert("method should be overriden");
-  }
+  public getR() {}
 
-  public getFontSize() {
-    alert("method should be overriden");
-  }
+  public getFontSize() {}
 
-  public getColor() {
-    alert("method should be overriden");
-  }
+  public getColor() {}
 
-  public getName() {
-    alert("method should be overriden");
-  }
+  public getName() {}
 
   public selectNode() {
     this.isSelected = true;
     this.nodeColor = NodeColor.selectedNode;
   }
 
-  public deselectNode() {
-    alert("method should be overriden");
+  public deselectNode() {}
+
+  public setConfiguration(config: HostConfiguration) {}
+
+  public getConfiguration() {
+    return null;
   }
 }

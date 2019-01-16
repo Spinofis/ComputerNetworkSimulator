@@ -3,5 +3,6 @@ export enum GraphEditMode {
   addLinks,
   deleteNodes,
   addNode,
+  hostConfiguration,
   none
 }

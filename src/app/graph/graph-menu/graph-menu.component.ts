@@ -10,6 +10,7 @@ export class GraphMenu implements OnInit {
   isDeleatingDevices: boolean = false;
   isDeleatingLinks: boolean = false;
   isAddingLinks: boolean = false;
+  isHostConfiguration: boolean = false;
 
   @Output() graphEditModeChange: EventEmitter<GraphEditMode> = new EventEmitter<
     GraphEditMode
@@ -24,7 +25,7 @@ export class GraphMenu implements OnInit {
   cbDeleteDevices_Click() {
     this.isDeleatingDevices = !this.isDeleatingDevices;
     if (this.isDeleatingDevices) {
-      this.isDeleatingLinks = this.isAddingLinks = false;
+      this.isDeleatingLinks = this.isHostConfiguration = this.isAddingLinks = false;
       this.graphEditModeChange.emit(GraphEditMode.deleteNodes);
     } else {
       this.graphEditModeChange.emit(GraphEditMode.none);
@@ -34,7 +35,7 @@ export class GraphMenu implements OnInit {
   cbAddLinks_Click() {
     this.isAddingLinks = !this.isAddingLinks;
     if (this.isAddingLinks) {
-      this.isDeleatingLinks = this.isDeleatingDevices = false;
+      this.isDeleatingLinks = this.isHostConfiguration = this.isDeleatingDevices = false;
       this.graphEditModeChange.emit(GraphEditMode.addLinks);
     } else {
       this.graphEditModeChange.emit(GraphEditMode.none);
@@ -44,8 +45,18 @@ export class GraphMenu implements OnInit {
   cbDeleatingLinks_Click() {
     this.isDeleatingLinks = !this.isDeleatingLinks;
     if (this.isDeleatingLinks) {
-      this.isAddingLinks = this.isDeleatingDevices = false;
+      this.isAddingLinks = this.isHostConfiguration = this.isDeleatingDevices = false;
       this.graphEditModeChange.emit(GraphEditMode.deleteLinks);
+    } else {
+      this.graphEditModeChange.emit(GraphEditMode.none);
+    }
+  }
+
+  cbHostConfiguration_Click() {
+    this.isHostConfiguration = !this.isHostConfiguration;
+    if (this.isHostConfiguration) {
+      this.isAddingLinks = this.isDeleatingLinks = this.isDeleatingDevices = false;
+      this.graphEditModeChange.emit(GraphEditMode.hostConfiguration);
     } else {
       this.graphEditModeChange.emit(GraphEditMode.none);
     }

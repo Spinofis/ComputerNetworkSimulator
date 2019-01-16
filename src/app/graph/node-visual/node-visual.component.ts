@@ -12,8 +12,6 @@ export class NodeVisualComponent {
   nodeClicked: EventEmitter<Node> = new EventEmitter<Node>();
 
   onNodeClicked() {
-    // if (this.node.isSelected) this.node.deselectNode();
-    // else this.node.selectNode();
     this.nodeClicked.emit(this.node);
   }
 

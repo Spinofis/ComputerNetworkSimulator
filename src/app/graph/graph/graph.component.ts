@@ -15,6 +15,9 @@ import { D3Service } from "../shared/services/d3.service";
 import { GraphEditMode } from "../shared/enums/graph-edit-mode";
 import { PcNode } from "../shared/model/d3/pc-node";
 import { RouterNode } from "../shared/model/d3/router-node";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NetworkService } from "../shared/services/network-service";
+import { HostConfigurator } from "../shared/interfaces/host-configurator";
 
 @Component({
   selector: "graph",
@@ -40,7 +43,9 @@ export class GraphComponent implements OnInit, AfterViewInit {
   constructor(
     private d3Service: D3Service,
     private graphService: GraphService,
-    private ref: ChangeDetectorRef
+    private networkService: NetworkService,
+    private ref: ChangeDetectorRef,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -119,6 +124,11 @@ export class GraphComponent implements OnInit, AfterViewInit {
         this.afterGraphEdit();
         break;
       }
+      case GraphEditMode.hostConfiguration: {
+        (e as Node).deselectNode();
+        this.configurateHost(e);
+        break;
+      }
       default: {
         break;
       }
@@ -176,5 +186,12 @@ export class GraphComponent implements OnInit, AfterViewInit {
       this.preapreSimulation();
       this.graph.initSimulation(this.options);
     }, 50);
+  }
+
+  private configurateHost(node: Node) {
+    const modalRef = this.modalService.open(
+      this.networkService.getHostConfiguratorWindow(node)
+    );
+    (modalRef.componentInstance as HostConfigurator).setNode(node);
   }
 }

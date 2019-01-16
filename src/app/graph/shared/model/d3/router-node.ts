@@ -1,7 +1,10 @@
 import { Node } from "./node";
 import { NodeColor } from "../../enums/node-color";
+import { RouterConfiguration } from "../network/router-configuration";
+import { HostConfiguration } from "../../abstract/host-configuration";
 
 export class RouterNode extends Node {
+  public routerConfiguration: RouterConfiguration;
   private routerNumber: number;
   radius: number = 90;
   nodeColor = NodeColor.router;
@@ -32,5 +35,13 @@ export class RouterNode extends Node {
   public deselectNode() {
     this.isSelected = false;
     this.nodeColor = NodeColor.router;
+  }
+
+  public setConfiguration(config: HostConfiguration) {
+    this.routerConfiguration = config as RouterConfiguration;
+  }
+
+  public getConfiguration() {
+    return this.routerConfiguration;
   }
 }
