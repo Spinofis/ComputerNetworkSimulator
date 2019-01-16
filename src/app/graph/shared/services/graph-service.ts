@@ -1,39 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Link } from "../model/d3/link";
 import { Node } from "../model/d3/node";
+import { isType } from "@angular/core/src/type";
+import { PcNode } from "../model/d3/pc-node";
+import { RouterNode } from "../model/d3/router-node";
 
 @Injectable()
 export class GraphService {
-  // public editGraph(
-  //   clickedNode1: Node,
-  //   clickedNode2: Node,
-  //   editMode: GraphEditMode,
-  //   nodes: Node[],
-  //   links: Link[]
-  // ) {
-  //   switch (editMode) {
-  //     case GraphEditMode.addLinks: {
-  //       this.addLink(clickedNode1, clickedNode2, links);
-  //       break;
-  //     }
-  //     case GraphEditMode.deleteLinks: {
-  //       this.deleteLink(clickedNode1, clickedNode2, links);
-  //       break;
-  //     }
-  //     case GraphEditMode.deleteNodes: {
-  //       this.deleteNode(clickedNode1, links, nodes);
-  //       break;
-  //     }
-  //     case GraphEditMode.addNode: {
-  //       this.addNode(clickedNode1, nodes);
-  //       break;
-  //     }
-  //     default: {
-  //       break;
-  //     }
-  //   }
-  // }
-
   public addNode(node: Node, nodes: Node[]) {}
 
   public deleteLink(node1: Node, node2: Node, links: Link[]) {
@@ -60,7 +33,8 @@ export class GraphService {
     let linksWithNode: Link[] = this.getAllLinksWithNode(node, links);
 
     linksWithNode.forEach(element => {
-      links.splice(links.indexOf(element, 1));
+      // let index: number = links.indexOf(element);
+      links.splice(links.indexOf(element), 1);
     });
 
     nodes.splice(nodes.indexOf(node), 1);
@@ -100,5 +74,25 @@ export class GraphService {
     });
 
     return linksWithNode;
+  }
+
+  public getRouterCountFromNode(nodes: Node[]): number {
+    let routerNodes: number = 0;
+    nodes.forEach(element => {
+      if (element instanceof RouterNode) {
+        routerNodes++;
+      }
+    });
+    return routerNodes;
+  }
+
+  public getPcCountFromNodes(nodes: Node[]): number {
+    let pcNodes: number = 0;
+    nodes.forEach(element => {
+      if (element instanceof PcNode) {
+        pcNodes++;
+      }
+    });
+    return pcNodes;
   }
 }

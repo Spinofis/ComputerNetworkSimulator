@@ -1,20 +1,24 @@
 import { Node } from "./node";
-import { NodeColor } from '../../enums/node-color';
+import { NodeColor } from "../../enums/node-color";
 
 export class RouterNode extends Node {
+  private routerNumber: number;
   radius: number = 90;
   nodeColor = NodeColor.router;
 
+  private static routerNumber = 1;
+
   constructor(id) {
     super(id);
+    this.routerNumber = RouterNode.routerNumber++;
   }
 
   public getColor() {
     return this.nodeColor;
   }
 
-  public getSuffix() {
-    return "Router_";
+  public getName() {
+    return "Router_" + this.routerNumber;
   }
 
   public getR() {

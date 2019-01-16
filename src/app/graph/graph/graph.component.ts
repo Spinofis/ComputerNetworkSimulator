@@ -147,12 +147,12 @@ export class GraphComponent implements OnInit, AfterViewInit {
   onAddPc(e) {
     this.graph.simulation.stop();
     if (!this.nodes) this.nodes = [];
-    let pcNumber: number = this.nodes.length + 1;
+    let nodeId: number = this.nodes.length + 1;
     let newNodes: Node[] = [];
     this.nodes.forEach(element => {
       newNodes.push(element);
     });
-    newNodes.push(new PcNode(pcNumber));
+    newNodes.push(new PcNode(nodeId));
     this.nodes = [];
     this.restartGraphAfterNodeAdd(newNodes);
   }
@@ -160,12 +160,12 @@ export class GraphComponent implements OnInit, AfterViewInit {
   onAddRouter(e) {
     this.graph.simulation.stop();
     if (!this.nodes) this.nodes = [];
-    let routerNumber: number = this.nodes.length + 1;
+    let nodeId: number = this.nodes.length + 1;
     let newNodes: Node[] = [];
     this.nodes.forEach(element => {
       newNodes.push(element);
     });
-    newNodes.push(new RouterNode(routerNumber));
+    newNodes.push(new RouterNode(nodeId));
     this.nodes = [];
     this.restartGraphAfterNodeAdd(newNodes);
   }

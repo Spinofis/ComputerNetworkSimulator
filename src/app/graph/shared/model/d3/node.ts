@@ -30,7 +30,7 @@ export abstract class Node implements d3.SimulationNodeDatum {
     alert("method should be overriden");
   }
 
-  public getSuffix() {
+  public getName() {
     alert("method should be overriden");
   }
 
