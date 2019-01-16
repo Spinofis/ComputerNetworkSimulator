@@ -44,4 +44,12 @@ export class RouterNode extends Node {
   public getConfiguration() {
     return this.routerConfiguration;
   }
+
+  public setConnectedNodes(connectedNodes: Node[]) {
+    this.connectedNodes = connectedNodes;
+  }
+
+  public getConnectedNodes(): Node[] {
+    return this.connectedNodes;
+  }
 }

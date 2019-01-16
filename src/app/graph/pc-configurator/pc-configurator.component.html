@@ -17,7 +17,7 @@
       <label for="Mask">Maska podsieci</label>
       <input formControlName="Mask" type="text" class="form-control" />
       <small
-        *ngIf="!f.Ip.valid && submitted"
+        *ngIf="!f.Mask.valid && submitted"
         id="passwordHelp"
         class="text-danger"
         >Maska jest niepoprawna</small
@@ -27,7 +27,7 @@
       <label for="Gateway">Brama</label>
       <input formControlName="Gateway" type="text" class="form-control" />
       <small
-        *ngIf="!f.Ip.valid && submitted"
+        *ngIf="!f.Gateway.valid && submitted"
         id="passwordHelp"
         class="text-danger"
         >Brama jest niepoprawne</small

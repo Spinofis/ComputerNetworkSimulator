@@ -5,7 +5,12 @@ import { Node } from "../shared/model/d3/node";
 import { PcConfiguration } from "../shared/model/network/pc-configuration";
 import { PcNode } from "../shared/model/d3/pc-node";
 import { ValidatorService } from "../shared/services/validator-service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl
+} from "@angular/forms";
 
 @Component({
   selector: "app-pc-configurator",
@@ -75,17 +80,28 @@ export class PcConfiguratorComponent implements OnInit, HostConfigurator {
 
   save() {
     this.submitted = true;
-    if (this.node) {
+    if (this.node && !this.hasControlErrors()) {
       let pcConfiguration: PcConfiguration = new PcConfiguration();
       pcConfiguration.ip = this.f["Ip"].value;
       pcConfiguration.mask = this.f["Mask"].value;
       pcConfiguration.gateway = this.f["Gateway"].value;
       this.node.setConfiguration(pcConfiguration);
+      this.activeModal.close();
     }
-    this.activeModal.close();
   }
 
   btnCancel_Click(e) {
     this.activeModal.close();
+  }
+
+  hasControlErrors(): boolean {
+    let errors: boolean = false;
+    Object.keys(this.configurationForm.controls).forEach(key => {
+      let abstractControl: AbstractControl = this.configurationForm.get(key);
+      abstractControl.markAsDirty();
+      if (abstractControl.invalid) errors = true;
+    });
+
+    return errors;
   }
 }

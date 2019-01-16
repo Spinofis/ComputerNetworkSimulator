@@ -15,6 +15,7 @@ export abstract class Node implements d3.SimulationNodeDatum, Host {
   linkCount: number = 0;
   nodeColor: NodeColor;
   isSelected: boolean = false;
+  connectedNodes: Node[] = [];
 
   constructor(id) {
     this.id = id;
@@ -39,5 +40,11 @@ export abstract class Node implements d3.SimulationNodeDatum, Host {
 
   public getConfiguration() {
     return null;
+  }
+
+  public setConnectedNodes(connectedNodes: Node[]) {}
+
+  public getConnectedNodes(): Node[] {
+    return this.connectedNodes;
   }
 }

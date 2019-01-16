@@ -15,13 +15,15 @@ import { NetworkService } from "./shared/services/network-service";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { ValidatorService } from "./shared/services/validator-service";
 import { ReactiveFormsModule } from "@angular/forms";
+import { AgGridModule } from "ag-grid-angular";
 
 @NgModule({
   imports: [
     GraphRoutingModule,
     CommonModule,
     NgbModalModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AgGridModule.withComponents(null)
   ],
   declarations: [
     GraphComponent,

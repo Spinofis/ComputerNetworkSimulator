@@ -192,6 +192,12 @@ export class GraphComponent implements OnInit, AfterViewInit {
     const modalRef = this.modalService.open(
       this.networkService.getHostConfiguratorWindow(node)
     );
+    let connectedNodes: Node[] = this.graphService.getConnectedNodes(
+      node,
+      this.nodes,
+      this.links
+    );
+    node.setConnectedNodes(connectedNodes);
     (modalRef.componentInstance as HostConfigurator).setNode(node);
   }
 }

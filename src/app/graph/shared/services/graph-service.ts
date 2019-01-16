@@ -95,4 +95,22 @@ export class GraphService {
     });
     return pcNodes;
   }
+
+  public getConnectedNodes(node: Node, nodes: Node[], links: Link[]): Node[] {
+    let linksWithNode: Link[] = this.getAllLinksWithNode(node, links);
+    let connectedNodes: Node[] = [];
+    linksWithNode.forEach(element => {
+      if (element.source != node) connectedNodes.push(element.source as Node);
+      else connectedNodes.push(element.target as Node);
+    });
+
+    return connectedNodes;
+  }
+
+  public getNodeWithId(node: Node, nodes: Node[]) {
+    nodes.forEach(element => {
+      if (element.id == node.id) return element;
+    });
+    return null;
+  }
 }

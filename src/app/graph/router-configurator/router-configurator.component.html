@@ -1,3 +1,30 @@
-<p>
-  router-configurator works!
-</p>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Konfiguracja Router</h4>
+</div>
+<div class="modal-body">
+  <ag-grid-angular
+    style="width: 100%; height: 500px;"
+    class="ag-theme-balham"
+    [rowData]="gridDataSource"
+    [columnDefs]="columnDefs"
+  >
+  </ag-grid-angular>
+</div>
+<div class="modal-footer">
+  <button
+    id="btnCancel"
+    type="button"
+    class="btn btn-danger"
+    (click)="btnCancel_Click($event)"
+  >
+    Anuluj
+  </button>
+  <button
+    id="btnSave"
+    type="submit"
+    class="btn btn-success"
+    (click)="btnSave_Click()"
+  >
+    Zapisz
+  </button>
+</div>
