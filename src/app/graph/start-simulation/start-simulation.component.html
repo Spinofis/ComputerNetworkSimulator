@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Konfiguracja symulacji</h4>
+</div>
+<form [formGroup]="startSimulationForm" (ngSubmit)="start()">
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="hostControl">Host startowy</label>
+      <select formControlName="hostControl">
+        <option [ngValue]="hostControl" *ngFor="let hostControl of pcNodes">{{
+          hostControl.getName()
+        }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="hostControl">Host końcowy</label>
+      <select formControlName="hostControl">
+        <option [ngValue]="hostControl" *ngFor="let hostControl of pcNodes">{{
+          hostControl.getName()
+        }}</option>
+      </select>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      id="btnCancel"
+      type="button"
+      class="btn btn-danger"
+      (click)="btnCancel_Click($event)"
+    >
+      Anuluj
+    </button>
+    <button type="submit" class="btn btn-success">Start</button>
+  </div>
+</form>

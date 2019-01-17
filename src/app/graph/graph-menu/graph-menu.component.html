@@ -1,7 +1,10 @@
 <div class="sidebar">
-  <div class="item" tabindex="1" (click)="addRouter_Click()">Dodaj router</div>
-  <div class="item" tabindex="2" (click)="addPc_Click()">Dodaj pc</div>
-  <div class="item" tabindex="3" (click)="cbDeleteDevices_Click()">
+  <div class="item" tabindex="1" (click)="startSimulation()">
+    Rozpocznij symulacje
+  </div>
+  <div class="item" tabindex="2" (click)="addRouter_Click()">Dodaj router</div>
+  <div class="item" tabindex="3" (click)="addPc_Click()">Dodaj pc</div>
+  <div class="item" tabindex="4" (click)="cbDeleteDevices_Click()">
     Usuwanie urządzeń
     <input
       id="cbDeleteDevices"
@@ -10,7 +13,7 @@
       [checked]="isDeleatingDevices"
     />
   </div>
-  <div class="item" tabindex="4" (click)="cbAddLinks_Click()">
+  <div class="item" tabindex="5" (click)="cbAddLinks_Click()">
     Dodawanie połączeń
     <input
       id="cbAddLinks"
@@ -19,7 +22,7 @@
       [checked]="isAddingLinks"
     />
   </div>
-  <div class="item" tabindex="5" (click)="cbDeleatingLinks_Click()">
+  <div class="item" tabindex="6" (click)="cbDeleatingLinks_Click()">
     Usuwanie połączeń
     <input
       id="cbDeleatingLinks"
@@ -28,7 +31,7 @@
       [checked]="isDeleatingLinks"
     />
   </div>
-  <div class="item" tabindex="6" (click)="cbHostConfiguration_Click()">
+  <div class="item" tabindex="7" (click)="cbHostConfiguration_Click()">
     Konfiguracja hosta
     <input
       id="cbHostConfiguration"

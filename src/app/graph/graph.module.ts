@@ -16,6 +16,7 @@ import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { ValidatorService } from "./shared/services/validator-service";
 import { ReactiveFormsModule } from "@angular/forms";
 import { AgGridModule } from "ag-grid-angular";
+import { StartSimulationComponent } from "./start-simulation/start-simulation.component";
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { AgGridModule } from "ag-grid-angular";
     ZoomableDirective,
     GraphMenu,
     PcConfiguratorComponent,
-    RouterConfiguratorComponent
+    RouterConfiguratorComponent,
+    StartSimulationComponent
   ],
   providers: [D3Service, GraphService, NetworkService, ValidatorService],
   exports: [
@@ -43,6 +45,10 @@ import { AgGridModule } from "ag-grid-angular";
     DraggableDirective,
     ZoomableDirective
   ],
-  entryComponents: [PcConfiguratorComponent, RouterConfiguratorComponent]
+  entryComponents: [
+    PcConfiguratorComponent,
+    RouterConfiguratorComponent,
+    StartSimulationComponent
+  ]
 })
 export class GraphModule {}

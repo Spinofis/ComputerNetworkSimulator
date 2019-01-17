@@ -113,4 +113,18 @@ export class GraphService {
     });
     return null;
   }
+
+  public setConnectedNodesForAllNodes(nodes: Node[], links: Link[]) {
+    nodes.forEach(element => {
+      element.connectedNodes = this.getConnectedNodes(element, nodes, links);
+    });
+  }
+
+  public getPcNodesFormNodes(nodes: Node[]): PcNode[] {
+    let pcNodes: PcNode[] = [];
+    nodes.forEach(element => {
+      if (element instanceof PcNode) pcNodes.push(element);
+    });
+    return pcNodes;
+  }
 }

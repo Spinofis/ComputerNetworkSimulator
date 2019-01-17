@@ -18,6 +18,7 @@ import { RouterNode } from "../shared/model/d3/router-node";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { NetworkService } from "../shared/services/network-service";
 import { HostConfigurator } from "../shared/interfaces/host-configurator";
+import { StartSimulationComponent } from "../start-simulation/start-simulation.component";
 
 @Component({
   selector: "graph",
@@ -158,7 +159,6 @@ export class GraphComponent implements OnInit, AfterViewInit {
   }
 
   onAddPc(e) {
-    debugger;
     this.graph.simulation.stop();
     if (!this.nodes) this.nodes = [];
     let newNodes: Node[] = [];
@@ -201,5 +201,14 @@ export class GraphComponent implements OnInit, AfterViewInit {
     );
     node.setConnectedNodes(connectedNodes);
     (modalRef.componentInstance as HostConfigurator).setNode(node);
+  }
+
+  onDFS(e) {
+    this.graphService.setConnectedNodesForAllNodes(this.nodes, this.links);
+    const modalRef = this.modalService.open(StartSimulationComponent);
+    (modalRef.componentInstance as StartSimulationComponent).setPcNodes(
+      this.graphService.getPcNodesFormNodes(this.nodes)
+    );
+    // this.networkService.startSimulation( this.nodes);
   }
 }

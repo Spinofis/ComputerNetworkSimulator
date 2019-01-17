@@ -17,6 +17,7 @@ export class GraphMenu implements OnInit {
   >();
   @Output() addPc: EventEmitter<string> = new EventEmitter<string>();
   @Output() addRouter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() dfs: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {}
 
@@ -68,5 +69,9 @@ export class GraphMenu implements OnInit {
 
   addPc_Click() {
     this.addPc.emit("add pc");
+  }
+
+  startSimulation() {
+    this.dfs.emit("start simulation");
   }
 }
