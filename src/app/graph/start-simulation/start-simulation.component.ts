@@ -1,7 +1,16 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+  FormControl
+} from "@angular/forms";
 import { PcNode } from "../shared/model/d3/pc-node";
+import { NetworkSimulation } from "../shared/model/network/network-simulation";
+import { ValidatorService } from "../shared/services/validator-service";
+import { stringify } from "@angular/compiler/src/util";
 
 @Component({
   selector: "app-start-simulation",
@@ -11,46 +20,48 @@ import { PcNode } from "../shared/model/d3/pc-node";
 export class StartSimulationComponent implements OnInit {
   startSimulationForm: FormGroup;
   pcNodes: PcNode[] = [];
+  submitted: boolean = false;
+  selectedtHostFrom: any;
+  selectedtHostTo: any;
+  networkSimulation: NetworkSimulation;
 
-  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder) {}
+  constructor(
+    public activeModal: NgbActiveModal,
+    private fb: FormBuilder,
+    private validatorService: ValidatorService
+  ) {}
 
   ngOnInit() {
     this.buildForm();
   }
 
-  buildForm() {
+  private buildForm() {
     this.startSimulationForm = this.fb.group({
-      hostControl: []
+      hostFromControl: [null, Validators.required],
+      hostToControl: [null, Validators.required]
     });
   }
 
-  setPcNodes(pcNodes: PcNode[]) {
+  initWindow(pcNodes: PcNode[]) {
     this.pcNodes = pcNodes;
+    this.networkSimulation = new NetworkSimulation();
   }
-
-  // countries = [
-  //   {
-  //     id: "8f8c6e98",
-  //     name: "USA",
-  //     code: "USD"
-  //   },
-  //   {
-  //     id: "169fee1a",
-  //     name: "Canada",
-  //     code: "CAD"
-  //   },
-  //   {
-  //     id: "3953154c",
-  //     name: "UK",
-  //     code: "GBP"
-  //   }
-  // ];
 
   btnCancel_Click(e) {
     this.activeModal.close();
   }
 
+  get f() {
+    return this.startSimulationForm.controls;
+  }
+
   start() {
-    console.log("start symulacja");
+    if (!this.f["hostFromControl"].valid || !this.f["hostToControl"].valid) {
+      alert("Podaj host startowy i końcowy");
+    } else {
+      this.networkSimulation.nodeFrom = this.f["hostFromControl"].value;
+      this.networkSimulation.nodeTo = this.f["hostToControl"].value;
+      this.activeModal.close(this.networkSimulation);
+    }
   }
 }

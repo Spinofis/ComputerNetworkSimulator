@@ -4,19 +4,19 @@
 <form [formGroup]="startSimulationForm" (ngSubmit)="start()">
   <div class="modal-body">
     <div class="form-group">
-      <label for="hostControl">Host startowy</label>
-      <select formControlName="hostControl">
-        <option [ngValue]="hostControl" *ngFor="let hostControl of pcNodes">{{
-          hostControl.getName()
-        }}</option>
+      <label>Host startowy</label>
+      <select formControlName="hostFromControl">
+        <option *ngFor="let hostFrom of pcNodes" [ngValue]="hostFrom">
+          {{ hostFrom.getName() }}
+        </option>
       </select>
     </div>
     <div class="form-group">
-      <label for="hostControl">Host końcowy</label>
-      <select formControlName="hostControl">
-        <option [ngValue]="hostControl" *ngFor="let hostControl of pcNodes">{{
-          hostControl.getName()
-        }}</option>
+      <label>Host końcowy</label>
+      <select formControlName="hostToControl">
+        <option *ngFor="let hostTo of pcNodes" [ngValue]="hostTo">
+          {{ hostTo.getName() }}
+        </option>
       </select>
     </div>
   </div>

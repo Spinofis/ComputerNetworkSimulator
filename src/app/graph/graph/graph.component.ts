@@ -19,6 +19,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { NetworkService } from "../shared/services/network-service";
 import { HostConfigurator } from "../shared/interfaces/host-configurator";
 import { StartSimulationComponent } from "../start-simulation/start-simulation.component";
+import { NetworkSimulation } from "../shared/model/network/network-simulation";
 
 @Component({
   selector: "graph",
@@ -35,6 +36,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
   clickedNode1: Node;
   clickedNode2: Node;
   clickedNodeCount: number = 0;
+  networkSimulation: NetworkSimulation;
 
   private static nodeId: number = 1;
 
@@ -203,12 +205,14 @@ export class GraphComponent implements OnInit, AfterViewInit {
     (modalRef.componentInstance as HostConfigurator).setNode(node);
   }
 
-  onDFS(e) {
+  onStartSimulation(e) {
     this.graphService.setConnectedNodesForAllNodes(this.nodes, this.links);
     const modalRef = this.modalService.open(StartSimulationComponent);
-    (modalRef.componentInstance as StartSimulationComponent).setPcNodes(
+    (modalRef.componentInstance as StartSimulationComponent).initWindow(
       this.graphService.getPcNodesFormNodes(this.nodes)
     );
-    // this.networkService.startSimulation( this.nodes);
+    modalRef.result.then(networkSimulation => {
+      console.log(networkSimulation.nodeFrom);
+    });
   }
 }

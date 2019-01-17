@@ -80,7 +80,10 @@ export class PcConfiguratorComponent implements OnInit, HostConfigurator {
 
   save() {
     this.submitted = true;
-    if (this.node && !this.hasControlErrors()) {
+    if (
+      this.node &&
+      !this.validatorService.hasControlErrors(this.configurationForm)
+    ) {
       let pcConfiguration: PcConfiguration = new PcConfiguration();
       pcConfiguration.ip = this.f["Ip"].value;
       pcConfiguration.mask = this.f["Mask"].value;
@@ -92,16 +95,5 @@ export class PcConfiguratorComponent implements OnInit, HostConfigurator {
 
   btnCancel_Click(e) {
     this.activeModal.close();
-  }
-
-  hasControlErrors(): boolean {
-    let errors: boolean = false;
-    Object.keys(this.configurationForm.controls).forEach(key => {
-      let abstractControl: AbstractControl = this.configurationForm.get(key);
-      abstractControl.markAsDirty();
-      if (abstractControl.invalid) errors = true;
-    });
-
-    return errors;
   }
 }

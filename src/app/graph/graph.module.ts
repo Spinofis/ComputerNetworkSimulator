@@ -14,7 +14,7 @@ import { RouterConfiguratorComponent } from "./router-configurator/router-config
 import { NetworkService } from "./shared/services/network-service";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { ValidatorService } from "./shared/services/validator-service";
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { AgGridModule } from "ag-grid-angular";
 import { StartSimulationComponent } from "./start-simulation/start-simulation.component";
 

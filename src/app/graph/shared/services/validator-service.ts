@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { FormGroup, AbstractControl } from "@angular/forms";
 
 @Injectable()
 export class ValidatorService {
@@ -12,5 +13,15 @@ export class ValidatorService {
   public isIpValid(value: string): boolean {
     let regex = new RegExp(this.ipPattern);
     return regex.test(value);
+  }
+
+  public hasControlErrors(formGroup: FormGroup): boolean {
+    let errors: boolean = false;
+    Object.keys(formGroup.controls).forEach(key => {
+      let abstractControl: AbstractControl = formGroup.get(key);
+      abstractControl.markAsDirty();
+      if (abstractControl.invalid) errors = true;
+    });
+    return errors;
   }
 }

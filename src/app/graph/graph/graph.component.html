@@ -2,7 +2,7 @@
   (graphEditModeChange)="onGraphEditModeChange($event)"
   (addPc)="onAddPc($event)"
   (addRouter)="onAddRouter($event)"
-  (dfs)="onDFS($event)"
+  (onStartSimulation)="onStartSimulation($event)"
 ></app-graph-menu>
 <svg #svg [attr.width]="_options.width" [attr.height]="_options.height">
   <g [zoomableOf]="svg">
