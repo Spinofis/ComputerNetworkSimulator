@@ -7,7 +7,7 @@ import { RouterNode } from "../model/d3/router-node";
 
 @Injectable()
 export class GraphService {
-  public addNode(node: Node, nodes: Node[]) {}
+  private static nodeId: number = 1;
 
   public deleteLink(node1: Node, node2: Node, links: Link[]) {
     if (!node1 || !node2) throw new Error("parameter node is null");
@@ -126,5 +126,27 @@ export class GraphService {
       if (element instanceof PcNode) pcNodes.push(element);
     });
     return pcNodes;
+  }
+
+  public addPcNode(graph, nodes): Node[] {
+    graph.simulation.stop();
+    if (!nodes) nodes = [];
+    let newNodes: Node[] = [];
+    nodes.forEach(element => {
+      newNodes.push(element);
+    });
+    newNodes.push(new PcNode(GraphService.nodeId++));
+    return newNodes;
+  }
+
+  public addRouterNode(graph, nodes): Node[] {
+    graph.simulation.stop();
+    if (!nodes) nodes = [];
+    let newNodes: Node[] = [];
+    nodes.forEach(element => {
+      newNodes.push(element);
+    });
+    newNodes.push(new RouterNode(GraphService.nodeId++));
+    return newNodes;
   }
 }

@@ -38,8 +38,6 @@ export class GraphComponent implements OnInit, AfterViewInit {
   clickedNodeCount: number = 0;
   networkSimulation: NetworkSimulation;
 
-  private static nodeId: number = 1;
-
   @HostListener("window:resize", ["$event"])
   onResize(event) {
     this.graph.initSimulation(this.options);
@@ -124,11 +122,6 @@ export class GraphComponent implements OnInit, AfterViewInit {
         this.afterGraphEdit();
         break;
       }
-      // case GraphEditMode.addNode: {
-      //   // this.graphService.addNode(this.clickedNode1, this.nodes);
-      //   // this.afterGraphEdit();
-      //   break;
-      // }
       case GraphEditMode.hostConfiguration: {
         (e as Node).deselectNode();
         this.configurateHost(e);
@@ -161,25 +154,13 @@ export class GraphComponent implements OnInit, AfterViewInit {
   }
 
   onAddPc(e) {
-    this.graph.simulation.stop();
-    if (!this.nodes) this.nodes = [];
-    let newNodes: Node[] = [];
-    this.nodes.forEach(element => {
-      newNodes.push(element);
-    });
-    newNodes.push(new PcNode(GraphComponent.nodeId++));
+    let newNodes = this.graphService.addPcNode(this.graph, this.nodes);
     this.nodes = [];
     this.restartGraphAfterNodeAdd(newNodes);
   }
 
   onAddRouter(e) {
-    this.graph.simulation.stop();
-    if (!this.nodes) this.nodes = [];
-    let newNodes: Node[] = [];
-    this.nodes.forEach(element => {
-      newNodes.push(element);
-    });
-    newNodes.push(new RouterNode(GraphComponent.nodeId++));
+    let newNodes = this.graphService.addRouterNode(this.graph, this.nodes);
     this.nodes = [];
     this.restartGraphAfterNodeAdd(newNodes);
   }
@@ -212,7 +193,11 @@ export class GraphComponent implements OnInit, AfterViewInit {
       this.graphService.getPcNodesFormNodes(this.nodes)
     );
     modalRef.result.then(networkSimulation => {
-      console.log(networkSimulation.nodeFrom);
+      this.networkService.startSimulation(
+        networkSimulation.nodeFrom,
+        networkSimulation.nodeTo,
+        this.nodes
+      );
     });
   }
 }

@@ -1,4 +1,4 @@
-export class PathElement {
+export class SimulationPathElement {
   order: number;
   nodeId: string;
 }
