@@ -1,6 +1,7 @@
 import { NodeColor } from "../../enums/node-color";
 import { Host } from "../../interfaces/host";
 import { HostConfiguration } from "../../abstract/host-configuration";
+import { NodeSimulationState } from "../../enums/node-simulation-state";
 
 export abstract class Node implements d3.SimulationNodeDatum, Host {
   index?: number;
@@ -15,6 +16,7 @@ export abstract class Node implements d3.SimulationNodeDatum, Host {
   linkCount: number = 0;
   nodeColor: NodeColor;
   isSelected: boolean = false;
+  nodeSimulationState: NodeSimulationState = NodeSimulationState.none;
   connectedNodes: Node[] = [];
 
   constructor(id) {
@@ -31,10 +33,22 @@ export abstract class Node implements d3.SimulationNodeDatum, Host {
 
   public selectNode() {
     this.isSelected = true;
-    this.nodeColor = NodeColor.selectedNode;
+    this.nodeColor = NodeColor.selected;
   }
 
-  public deselectNode() {}
+  public setCorrect() {
+    this.nodeSimulationState = NodeSimulationState.correct;
+    this.nodeColor = NodeColor.correct;
+  }
+
+  public setInvalid() {
+    this.nodeSimulationState = NodeSimulationState.invalid;
+    this.nodeColor = NodeColor.invalid;
+  }
+
+  public setBaseView() {}
+
+  public setNoneSimulationSate() {}
 
   public setConfiguration(config: HostConfiguration) {}
 

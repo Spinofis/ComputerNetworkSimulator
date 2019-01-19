@@ -3,6 +3,7 @@ import { NodeColor } from "../../enums/node-color";
 import { PcConfiguration } from "../network/pc-configuration";
 import { Host } from "../../interfaces/host";
 import { HostConfiguration } from "../../abstract/host-configuration";
+import { NodeSimulationState } from "../../enums/node-simulation-state";
 
 export class PcNode extends Node implements Host {
   public pcConfiguration: PcConfiguration;
@@ -34,9 +35,30 @@ export class PcNode extends Node implements Host {
     return this.radius / 2 + "px";
   }
 
-  public deselectNode() {
+  public setBaseView() {
     this.isSelected = false;
-    this.nodeColor = NodeColor.pc;
+    switch (this.nodeSimulationState) {
+      case NodeSimulationState.correct: {
+        this.nodeColor = NodeColor.correct;
+        break;
+      }
+      case NodeSimulationState.invalid: {
+        this.nodeColor = NodeColor.invalid;
+        break;
+      }
+      case NodeSimulationState.none: {
+        this.nodeColor = NodeColor.pc;
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+
+  public setNoneSimulationSate() {
+    this.nodeSimulationState = NodeSimulationState.none;
+    this.setBaseView();
   }
 
   public setConfiguration(config: HostConfiguration) {

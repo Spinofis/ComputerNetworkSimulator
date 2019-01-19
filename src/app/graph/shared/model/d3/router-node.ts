@@ -2,6 +2,7 @@ import { Node } from "./node";
 import { NodeColor } from "../../enums/node-color";
 import { RouterConfiguration } from "../network/router-configuration";
 import { HostConfiguration } from "../../abstract/host-configuration";
+import { NodeSimulationState } from "../../enums/node-simulation-state";
 
 export class RouterNode extends Node {
   public routerConfiguration: RouterConfiguration;
@@ -33,9 +34,30 @@ export class RouterNode extends Node {
     return this.radius / 2 + "px";
   }
 
-  public deselectNode() {
+  public setNoneSimulationSate() {
+    this.nodeSimulationState = NodeSimulationState.none;
+    this.setBaseView();
+  }
+
+  public setBaseView() {
     this.isSelected = false;
-    this.nodeColor = NodeColor.router;
+    switch (this.nodeSimulationState) {
+      case NodeSimulationState.correct: {
+        this.nodeColor = NodeColor.correct;
+        break;
+      }
+      case NodeSimulationState.invalid: {
+        this.nodeColor = NodeColor.invalid;
+        break;
+      }
+      case NodeSimulationState.none: {
+        this.nodeColor = NodeColor.router;
+        break;
+      }
+      default: {
+        break;
+      }
+    }
   }
 
   public setConfiguration(config: HostConfiguration) {

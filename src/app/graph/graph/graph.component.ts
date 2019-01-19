@@ -123,7 +123,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
         break;
       }
       case GraphEditMode.hostConfiguration: {
-        (e as Node).deselectNode();
+        (e as Node).setBaseView();
         this.configurateHost(e);
         this.afterGraphEdit();
         break;
@@ -141,8 +141,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
 
   deselectEditedNodes() {
     setTimeout(() => {
-      if (this.clickedNode1) this.clickedNode1.deselectNode();
-      if (this.clickedNode2) this.clickedNode2.deselectNode();
+      if (this.clickedNode1) this.clickedNode1.setBaseView();
+      if (this.clickedNode2) this.clickedNode2.setBaseView();
       this.clickedNode1 = null;
       this.clickedNode2 = null;
       this.clickedNodeCount = 0;
@@ -193,11 +193,14 @@ export class GraphComponent implements OnInit, AfterViewInit {
       this.graphService.getPcNodesFormNodes(this.nodes)
     );
     modalRef.result.then(networkSimulation => {
-      this.networkService.startSimulation(
-        networkSimulation.nodeFrom,
-        networkSimulation.nodeTo,
-        this.nodes
-      );
+      if (networkSimulation) {
+        this.networkService.startSimulation(
+          networkSimulation.nodeFrom,
+          networkSimulation.nodeTo,
+          this.nodes,
+          this.graph
+        );
+      }
     });
   }
 }
