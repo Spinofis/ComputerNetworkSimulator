@@ -1,8 +1,8 @@
 .sidebar {
   margin: 0;
   padding: 0;
-  width: 200px;
-  background-color: #f1f1f1;
+  width: 230px;
+  background-color: #262626;
   position: fixed;
   height: 100%;
   overflow: auto;
@@ -10,23 +10,34 @@
 }
 
 .item {
-  display: block;
-  color: black;
-  padding: 16px;
+  padding: 6px 8px 6px 16px;
   text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
   cursor: pointer;
-  // border-bottom: 1px solid;
+  outline: none;
 }
 
 .item:hover {
-  background-color: #4caf50;
-  // color: white;
+  color: white;
+  background-color: green;
 }
 
 div.content {
   margin-left: 200px;
   padding: 1px 16px;
   height: 1000px;
+  text-align: right;
+}
+
+.dropdown-container {
+  display: block;
+  background-color: #6e6c6c;
 }
 
 @media screen and (max-width: 700px) {

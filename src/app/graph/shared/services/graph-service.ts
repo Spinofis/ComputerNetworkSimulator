@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Link } from "../model/d3/link";
 import { Node } from "../model/d3/node";
-import { isType } from "@angular/core/src/type";
 import { PcNode } from "../model/d3/pc-node";
 import { RouterNode } from "../model/d3/router-node";
+import { SwitchNode } from "../model/d3/switch-node";
 
 @Injectable()
 export class GraphService {
@@ -20,11 +20,63 @@ export class GraphService {
   public addLink(node1: Node, node2: Node, links: Link[]) {
     if (!node1 || !node2) throw new Error("parameter node is null");
 
-    let link = this.getLinkWithNodes(node1, node2, links);
-
-    if (link) return;
+    if (!this.isAllowedToConnectNodes(node1, node2, links)) return;
 
     if (node1.id != node2.id) links.push(new Link(node1.id, node2.id));
+  }
+
+  private isAllowedToConnectNodes(node1: Node, node2: Node, links): boolean {
+    let link = this.getLinkWithNodes(node1, node2, links);
+
+    if (link) return false;
+
+    if (
+      node1.constructor.name == node2.constructor.name &&
+      !(node1 instanceof RouterNode)
+    )
+      return false;
+
+    if (node1 instanceof RouterNode && node2 instanceof PcNode) return false;
+
+    if (node1 instanceof PcNode && node2 instanceof RouterNode) return false;
+
+    if (node1 instanceof RouterNode && node2 instanceof SwitchNode) {
+      if (this.hasRouterSwitch(node1, links)) return false;
+      if (this.hasSwitchRouter(node2, links)) return false;
+    }
+
+    if (node1 instanceof SwitchNode && node2 instanceof RouterNode) {
+      if (this.hasRouterSwitch(node2, links)) return false;
+      if (this.hasSwitchRouter(node1, links)) return false;
+    }
+
+    return true;
+  }
+
+  private hasRouterSwitch(routerNode: Node, links: Link[]): boolean {
+    let has: boolean = false;
+
+    links.forEach(element => {
+      if (element.source == routerNode && element.target instanceof SwitchNode)
+        has = true;
+      if (element.target == routerNode && element.source instanceof SwitchNode)
+        has = true;
+    });
+
+    return has;
+  }
+
+  private hasSwitchRouter(switchNode: Node, links: Link[]): boolean {
+    let has: boolean = false;
+
+    links.forEach(element => {
+      if (element.source == switchNode && element.target instanceof RouterNode)
+        has = true;
+      if (element.target == switchNode && element.source instanceof RouterNode)
+        has = true;
+    });
+
+    return has;
   }
 
   public deleteNode(node: Node, links: Link[], nodes: Node[]) {
@@ -33,7 +85,6 @@ export class GraphService {
     let linksWithNode: Link[] = this.getAllLinksWithNode(node, links);
 
     linksWithNode.forEach(element => {
-      // let index: number = links.indexOf(element);
       links.splice(links.indexOf(element), 1);
     });
 
@@ -147,6 +198,17 @@ export class GraphService {
       newNodes.push(element);
     });
     newNodes.push(new RouterNode(GraphService.nodeId++));
+    return newNodes;
+  }
+
+  public addSwitchNode(graph, nodes): Node[] {
+    graph.simulation.stop();
+    if (!nodes) nodes = [];
+    let newNodes: Node[] = [];
+    nodes.forEach(element => {
+      newNodes.push(element);
+    });
+    newNodes.push(new SwitchNode(GraphService.nodeId++));
     return newNodes;
   }
 }

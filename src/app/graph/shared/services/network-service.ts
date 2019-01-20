@@ -6,6 +6,7 @@ import { RouterConfiguratorComponent } from "../../router-configurator/router-co
 import { Node } from "../model/d3/node";
 import { SimulationPath } from "../model/network/simulation-path";
 import { ForceDirectedGraph } from "../model/d3/force-directed-graph";
+import { SwitchNode } from "../model/d3/switch-node";
 
 @Injectable()
 export class NetworkService {
@@ -40,6 +41,8 @@ export class NetworkService {
       this.allSimulationPaths
     );
     this.setBaseSateToAllNodes(nodes);
+    if (this.isPathInOneNetwork(this.simulationPath))
+      this.simulationPath = this.corigatePath(this.simulationPath);
     this.goFormNodeToNode(this.simulationPath);
   }
 
@@ -125,5 +128,30 @@ export class NetworkService {
       element.setNoneSimulationSate();
     });
     this.graph.simulation.restart();
+  }
+
+  private isPathInOneNetwork(path: SimulationPath): boolean {
+    let is: boolean = true;
+    path.nodes.forEach(element => {
+      if (element instanceof RouterNode) is = false;
+    });
+
+    return is;
+  }
+
+  private corigatePath(path: SimulationPath): SimulationPath {
+    let newPath = new SimulationPath();
+    newPath.nodes = [];
+    path.nodes.forEach(element1 => {
+      newPath.nodes.push(element1);
+      if (element1 instanceof SwitchNode) {
+        element1.connectedNodes.forEach(element2 => {
+          if (element2 instanceof RouterNode) {
+            newPath.nodes.push(element2);
+          }
+        });
+      }
+    });
+    return newPath;
   }
 }

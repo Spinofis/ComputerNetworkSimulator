@@ -1,10 +1,18 @@
-<div class="sidebar">
-  <div class="item" tabindex="1" (click)="startSimulation()">
+<!-- <div class="sidebar">
+  <div class="item" tabindex="1" (click)="(dropdown_Click)">
+    Dropdown <i class="fa fa-caret-down"></i>
+  </div>
+  <div class="dropdown-container">
+    <div class="item" tabindex="2" (click)="startSimulation()">
+      Rozpocznij symulacje
+    </div>
+  </div>
+  <div class="item" tabindex="3" (click)="startSimulation()">
     Rozpocznij symulacje
   </div>
-  <div class="item" tabindex="2" (click)="addRouter_Click()">Dodaj router</div>
-  <div class="item" tabindex="3" (click)="addPc_Click()">Dodaj pc</div>
-  <div class="item" tabindex="4" (click)="cbDeleteDevices_Click()">
+  <div class="item" tabindex="4" (click)="addRouter_Click()">Dodaj router</div>
+  <div class="item" tabindex="5" (click)="addPc_Click()">Dodaj pc</div>
+  <div class="item" tabindex="6" (click)="cbDeleteDevices_Click()">
     Usuwanie urządzeń
     <input
       id="cbDeleteDevices"
@@ -13,7 +21,7 @@
       [checked]="isDeleatingDevices"
     />
   </div>
-  <div class="item" tabindex="5" (click)="cbAddLinks_Click()">
+  <div class="item" tabindex="7" (click)="cbAddLinks_Click()">
     Dodawanie połączeń
     <input
       id="cbAddLinks"
@@ -22,7 +30,7 @@
       [checked]="isAddingLinks"
     />
   </div>
-  <div class="item" tabindex="6" (click)="cbDeleatingLinks_Click()">
+  <div class="item" tabindex="8" (click)="cbDeleatingLinks_Click()">
     Usuwanie połączeń
     <input
       id="cbDeleatingLinks"
@@ -31,7 +39,62 @@
       [checked]="isDeleatingLinks"
     />
   </div>
-  <div class="item" tabindex="7" (click)="cbHostConfiguration_Click()">
+  <div class="item" tabindex="9" (click)="cbHostConfiguration_Click()">
+    Konfiguracja hosta
+    <input
+      id="cbHostConfiguration"
+      type="checkbox"
+      value="isHostConfiguration"
+      [checked]="isHostConfiguration"
+    />
+  </div>
+</div> -->
+
+<div class="sidebar">
+  <div class="item" tabindex="1" (click)="simulationDropDown_Click()">
+    Symulacja <i class="fa fa-caret-down"></i>
+  </div>
+  <div *ngIf="isSimulationDropDown" class="dropdown-container">
+    <div class="item" tabindex="2" (click)="startSimulation()">
+      Rozpocznij symulacje
+    </div>
+  </div>
+  <div class="item" tabindex="3" (click)="addHostDropDown_Click()">
+    Dodawanie hostów <i class="fa fa-caret-down"></i>
+  </div>
+  <div *ngIf="isAddNodeDropDown" class="dropdown-container">
+    <div class="item" tabindex="4" (click)="addRouter_Click()">
+      Dodaj router
+    </div>
+    <div class="item" tabindex="5" (click)="addPc_Click()">Dodaj pc</div>
+    <div class="item" tabindex="6" (click)="addSwitch_Click()">
+      Dodaj switch
+    </div>
+  </div>
+  <div class="item" tabindex="7" (click)="connectHosDropdown_Click()">
+    Łączenie hostów <i class="fa fa-caret-down"></i>
+  </div>
+  <div *ngIf="isConnectHost" class="dropdown-container">
+    <div class="item" tabindex="8" (click)="cbAddLinks_Click()">
+      Dodawanie połączeń
+      <input
+        id="cbAddLinks"
+        type="checkbox"
+        value="isAddingLinks"
+        [checked]="isAddingLinks"
+      />
+    </div>
+    <div class="item" tabindex="9" (click)="cbDeleatingLinks_Click()">
+      Usuwanie połączeń
+      <input
+        id="cbDeleatingLinks"
+        type="checkbox"
+        value="isDeleatingLinks"
+        [checked]="isDeleatingLinks"
+      />
+    </div>
+  </div>
+  <div class="item" tabindex="10" (click)="cbHostConfiguration_Click()">
     Konfiguracja hosta
     <input
       id="cbHostConfiguration"

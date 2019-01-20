@@ -165,6 +165,12 @@ export class GraphComponent implements OnInit, AfterViewInit {
     this.restartGraphAfterNodeAdd(newNodes);
   }
 
+  onAddSwitch(e){
+    let newNodes = this.graphService.addSwitchNode(this.graph, this.nodes);
+    this.nodes = [];
+    this.restartGraphAfterNodeAdd(newNodes);
+  }
+
   private restartGraphAfterNodeAdd(newNodes: Node[]) {
     setTimeout(() => {
       this.nodes = newNodes;

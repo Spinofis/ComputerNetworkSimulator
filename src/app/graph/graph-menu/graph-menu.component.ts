@@ -12,11 +12,16 @@ export class GraphMenu implements OnInit {
   isAddingLinks: boolean = false;
   isHostConfiguration: boolean = false;
 
+  isSimulationDropDown: boolean = false;
+  isAddNodeDropDown: boolean = false;
+  isConnectHost: boolean = false;
+
   @Output() graphEditModeChange: EventEmitter<GraphEditMode> = new EventEmitter<
     GraphEditMode
   >();
   @Output() addPc: EventEmitter<string> = new EventEmitter<string>();
   @Output() addRouter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() addSwitch: EventEmitter<string> = new EventEmitter<string>();
   @Output() onStartSimulation: EventEmitter<string> = new EventEmitter<
     string
   >();
@@ -73,7 +78,23 @@ export class GraphMenu implements OnInit {
     this.addPc.emit("add pc");
   }
 
+  addSwitch_Click() {
+    this.addSwitch.emit("add switch");
+  }
+
   startSimulation() {
     this.onStartSimulation.emit("start simulation");
+  }
+
+  simulationDropDown_Click() {
+    this.isSimulationDropDown = !this.isSimulationDropDown;
+  }
+
+  addHostDropDown_Click() {
+    this.isAddNodeDropDown = !this.isAddNodeDropDown;
+  }
+
+  connectHosDropdown_Click() {
+    this.isConnectHost = !this.isConnectHost;
   }
 }
