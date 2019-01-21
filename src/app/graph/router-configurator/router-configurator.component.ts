@@ -20,7 +20,8 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
 
   columnDefs = [
     { headerName: "Interfejs", field: "interface" },
-    { headerName: "Ip", field: "ip", editable: true },
+    { headerName: "Ip interfejsu", field: "ip", editable: true },   
+    { headerName: "Ip sieci", field: "networkIp", editable: true },
     { headerName: "Maska", field: "mask", editable: true },
     { headerName: "Id hosta", field: "hostId" }
   ];
@@ -63,6 +64,7 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
     this.gridDataSource.forEach(element => {
       if (!this.validatorService.isIpValid(element.ip)) isValid = false;
       if (!this.validatorService.isIpValid(element.mask)) isValid = false;
+      if (!this.validatorService.isIpValid(element.networkIp)) isValid = false;
     });
 
     return isValid;
@@ -94,7 +96,8 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
       hostId: connectedNode.id,
       interface: node.getName() + " / " + connectedNode.getName(),
       ip: "",
-      mask: ""
+      mask: "",
+      networkIp:""
     };
   }
 
@@ -103,7 +106,8 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
       hostId: routerInterface.nodeConnectedToId,
       interface: routerInterface.connectionName,
       ip: routerInterface.ip,
-      mask: routerInterface.mask
+      mask: routerInterface.mask,
+      networkIp:routerInterface.networkIp
     };
   }
 
@@ -112,6 +116,7 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
       connectionName: gridObject.interface,
       ip: gridObject.ip,
       mask: gridObject.mask,
+      networkIp:gridObject.networkIp,
       nodeConnectedToId: gridObject.hostId
     };
   }

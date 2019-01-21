@@ -28,8 +28,8 @@ import { NetworkSimulation } from "../shared/model/network/network-simulation";
   styleUrls: ["./graph.component.scss"]
 })
 export class GraphComponent implements OnInit, AfterViewInit {
-  @Input("nodes") nodes: Node[];
-  @Input("links") links: Link[];
+  @Input("nodes") nodes: Node[]=[];
+  @Input("links") links: Link[]=[];
   public graph: ForceDirectedGraph;
   private _options: { width; height } = { width: 800, height: 600 };
   graphEditMode: GraphEditMode = GraphEditMode.none;

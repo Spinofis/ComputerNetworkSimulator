@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { GraphRoutingModule } from "./grap-routing.module";
+import { GraphRoutingModule } from "./graph-routing.module";
 import { GraphComponent } from "./graph/graph.component";
 import { D3Service } from "./shared/services/d3.service";
 import { GraphService } from "./shared/services/graph-service";
@@ -38,13 +38,13 @@ import { StartSimulationComponent } from "./start-simulation/start-simulation.co
     StartSimulationComponent
   ],
   providers: [D3Service, GraphService, NetworkService, ValidatorService],
-  exports: [
-    GraphComponent,
-    LinkVisualComponent,
-    NodeVisualComponent,
-    DraggableDirective,
-    ZoomableDirective
-  ],
+  // exports: [
+  //   GraphComponent,
+  //   LinkVisualComponent,
+  //   NodeVisualComponent,
+  //   DraggableDirective,
+  //   ZoomableDirective
+  // ],
   entryComponents: [
     PcConfiguratorComponent,
     RouterConfiguratorComponent,

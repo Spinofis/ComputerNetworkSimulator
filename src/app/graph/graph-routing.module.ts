@@ -5,10 +5,7 @@ import { GraphComponent } from "./graph/graph.component";
 const routes: Routes = [
   {
     path: "",
-    component: GraphComponent,
-    data: {
-      title: "Graf"
-    }
+    component: GraphComponent
   }
 ];
 

@@ -8,7 +8,7 @@ import { GraphModule } from "./graph/graph.module";
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, UiModule, GraphModule],
+  imports: [BrowserModule, AppRoutingModule, UiModule],
   providers: [],
   bootstrap: [AppComponent]
 })
