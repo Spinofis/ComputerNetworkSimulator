@@ -25,6 +25,7 @@ export class GraphMenu implements OnInit {
   @Output() onStartSimulation: EventEmitter<string> = new EventEmitter<
     string
   >();
+  @Output() onSaveSimulation: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {}
 
@@ -96,5 +97,9 @@ export class GraphMenu implements OnInit {
 
   connectHosDropdown_Click() {
     this.isConnectHost = !this.isConnectHost;
+  }
+
+  saveSimulation() {
+    this.onSaveSimulation.emit("save simulation");
   }
 }

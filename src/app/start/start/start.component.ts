@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { TestService } from "../test-service";
 
 @Component({
-  selector: 'app-start',
-  templateUrl: './start.component.html',
-  styleUrls: ['./start.component.scss']
+  selector: "app-start",
+  templateUrl: "./start.component.html",
+  styleUrls: ["./start.component.scss"]
 })
 export class StartComponent implements OnInit {
-
-  constructor() { }
+  constructor(private testService: TestService) {}
 
   ngOnInit() {
+    this.testService.testPost().subscribe();
   }
-
 }
