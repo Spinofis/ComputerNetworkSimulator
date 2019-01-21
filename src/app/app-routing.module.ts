@@ -1,19 +1,20 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { LayoutComponent } from './ui/layout/layout.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { LayoutComponent } from "./ui/layout/layout.component";
 
 const routes: Routes = [
   {
     path: "graph",
     loadChildren: "./graph/graph.module#GraphModule"
-    // path:"",
-    // component:LayoutComponent,
-    // children:[
-    //   {
-    //     path: "graph",
-    //     loadChildren: "./graph/graph.module#GraphModule"
-    //   },
-    // ]
+  },
+  {
+    path: "start",
+    loadChildren: "./start/start.module#StartModule"
+  },
+  {
+    path:"",
+    redirectTo:"start",
+    pathMatch:"full"
   }
 ];
 
@@ -21,4 +22,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
