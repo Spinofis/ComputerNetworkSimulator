@@ -7,7 +7,10 @@ import { SwitchNode } from "../model/d3/switch-node";
 
 @Injectable()
 export class GraphService {
-  private static nodeId: number = 1;
+  public static nodeId: number = 1;
+  public static pcId: number = 1;
+  public static routerId: number = 1;
+  public static switchId: number = 1;
 
   public deleteLink(node1: Node, node2: Node, links: Link[]) {
     if (!node1 || !node2) throw new Error("parameter node is null");
@@ -186,7 +189,7 @@ export class GraphService {
     nodes.forEach(element => {
       newNodes.push(element);
     });
-    newNodes.push(new PcNode(GraphService.nodeId++));
+    newNodes.push(new PcNode(GraphService.nodeId++, GraphService.pcId++));
     return newNodes;
   }
 
@@ -197,7 +200,9 @@ export class GraphService {
     nodes.forEach(element => {
       newNodes.push(element);
     });
-    newNodes.push(new RouterNode(GraphService.nodeId++));
+    newNodes.push(
+      new RouterNode(GraphService.nodeId++, GraphService.routerId++)
+    );
     return newNodes;
   }
 
@@ -208,7 +213,9 @@ export class GraphService {
     nodes.forEach(element => {
       newNodes.push(element);
     });
-    newNodes.push(new SwitchNode(GraphService.nodeId++));
+    newNodes.push(
+      new SwitchNode(GraphService.nodeId++, GraphService.switchId++)
+    );
     return newNodes;
   }
 }

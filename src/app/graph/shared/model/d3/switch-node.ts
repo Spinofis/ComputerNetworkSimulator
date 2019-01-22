@@ -10,11 +10,9 @@ export class SwitchNode extends Node implements Host {
   radius: number = 75;
   nodeColor = NodeColor.switch;
 
-  private static switchNumber = 1;
-
-  constructor(id) {
+  constructor(id, switchNumber) {
     super(id);
-    this.switchNumber = SwitchNode.switchNumber++;
+    this.switchNumber = switchNumber;
   }
 
   public getColor() {

@@ -11,11 +11,9 @@ export class PcNode extends Node implements Host {
   radius: number = 60;
   nodeColor = NodeColor.pc;
 
-  private static pcNumber = 1;
-
-  constructor(id) {
+  constructor(id, pcNumber) {
     super(id);
-    this.pcNumber = PcNode.pcNumber++;
+    this.pcNumber = pcNumber;
   }
 
   public getColor() {
@@ -23,7 +21,6 @@ export class PcNode extends Node implements Host {
   }
 
   public getName() {
-    // return "PC_" + this.pcNumber;
     return this.id;
   }
 

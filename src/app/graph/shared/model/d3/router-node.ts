@@ -10,11 +10,10 @@ export class RouterNode extends Node {
   radius: number = 90;
   nodeColor = NodeColor.router;
 
-  private static routerNumber = 1;
 
-  constructor(id) {
+  constructor(id,routerNumber) {
     super(id);
-    this.routerNumber = RouterNode.routerNumber++;
+    this.routerNumber = routerNumber;
   }
 
   public getColor() {
