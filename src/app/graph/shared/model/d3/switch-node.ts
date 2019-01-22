@@ -6,8 +6,8 @@ import { HostConfiguration } from "../../abstract/host-configuration";
 import { NodeSimulationState } from "../../enums/node-simulation-state";
 
 export class SwitchNode extends Node implements Host {
-  private switchNumber: number;
-  radius: number = 75;
+  public switchNumber: number;
+  public radius: number = 75;
   nodeColor = NodeColor.switch;
 
   constructor(id, switchNumber) {

@@ -6,7 +6,7 @@ import { NodeSimulationState } from "../../enums/node-simulation-state";
 
 export class RouterNode extends Node {
   public routerConfiguration: RouterConfiguration;
-  private routerNumber: number;
+  public routerNumber: number;
   radius: number = 90;
   nodeColor = NodeColor.router;
 

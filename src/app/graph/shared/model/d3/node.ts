@@ -13,6 +13,7 @@ export abstract class Node implements d3.SimulationNodeDatum, Host {
   fy?: number | null;
 
   id: string;
+  databaseId: number = 0;
   linkCount: number = 0;
   nodeColor: NodeColor;
   isSelected: boolean = false;

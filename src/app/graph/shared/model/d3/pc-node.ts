@@ -7,7 +7,7 @@ import { NodeSimulationState } from "../../enums/node-simulation-state";
 
 export class PcNode extends Node implements Host {
   public pcConfiguration: PcConfiguration;
-  private pcNumber: number;
+  public pcNumber: number;
   radius: number = 60;
   nodeColor = NodeColor.pc;
 
