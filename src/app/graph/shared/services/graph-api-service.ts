@@ -13,10 +13,13 @@ import { Switch } from "../model/dto/switch";
 import { SwitchNode } from "../model/d3/switch-node";
 import { PcSwitch } from "../model/dto/pc-switch";
 import { RouterSwitch } from "../model/dto/router-switch";
+import { BaseService } from 'src/app/shared/base-service';
+import { ApiUrl } from '../enums/api-url';
+import { Observable } from 'rxjs';
 
 @Injectable()
-export class GraphApiService {
-  public saveSimulation(nodes: Node[], links: Link[], simulationId: number) {
+export class GraphApiService extends BaseService{
+  public saveSimulation(nodes: Node[], links: Link[], simulationId: number):Observable<Simulation> {
     let simulation: Simulation = new Simulation();
     simulation.id = simulationId;
     simulation.pcs = this.getPcs(nodes);
@@ -32,7 +35,7 @@ export class GraphApiService {
       simulation.switches,
       links
     );
-    debugger;
+    return this.post(ApiUrl.saveSimulation,simulation);
   }
 
   private getPcs(nodes: Node[]): Pc[] {

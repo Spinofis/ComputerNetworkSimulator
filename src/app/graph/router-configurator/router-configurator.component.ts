@@ -6,7 +6,6 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { RouterInterface } from "../shared/model/network/router-interface";
 import { RouterConfiguration } from "../shared/model/network/router-configuration";
 import { ValidatorService } from "../shared/services/validator-service";
-import { nodeChildrenAsMap } from "@angular/router/src/utils/tree";
 
 @Component({
   selector: "app-router-configurator",
@@ -23,7 +22,8 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
     { headerName: "Ip interfejsu", field: "ip", editable: true },   
     { headerName: "Ip sieci", field: "networkIp", editable: true },
     { headerName: "Maska", field: "mask", editable: true },
-    { headerName: "Id hosta", field: "hostId" }
+    { headerName: "Id hosta", field: "hostId" },
+    { headerName: "Id db", field: "databaseId" }
   ];
 
   constructor(
@@ -113,6 +113,7 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
 
   private gridObjectToRouterInterface(gridObject) {
     return {
+      databaseId:gridObject.databaseId,
       connectionName: gridObject.interface,
       ip: gridObject.ip,
       mask: gridObject.mask,

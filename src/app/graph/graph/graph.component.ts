@@ -212,10 +212,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
   }
 
   onSaveSimulation(e) {
-    this.apiService.saveSimulation(
-      this.nodes,
-      this.links,
-      this.databaseSimulationId
-    );
+    this.apiService
+      .saveSimulation(this.nodes, this.links, this.databaseSimulationId)
+      .subscribe();
   }
 }
