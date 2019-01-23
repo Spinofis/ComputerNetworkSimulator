@@ -1,6 +1,6 @@
 export class Switch {
   public id: number;
-  public nodeNumber: number;
-  public pPcNumber: number;
+  public nodeNumber: string;
+  public switchNumber: number;
   public name: string;
 }

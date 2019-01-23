@@ -5,4 +5,5 @@ export class Pc {
   public name: string;
   public ip: string;
   public mask: string;
+  public gateway: string;
 }

@@ -101,5 +101,6 @@ export class GraphMenu implements OnInit {
 
   saveSimulation() {
     this.onSaveSimulation.emit("save simulation");
+    
   }
 }

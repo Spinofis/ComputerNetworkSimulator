@@ -13,13 +13,12 @@ import { ForceDirectedGraph } from "../shared/model/d3/force-directed-graph";
 import { Node } from "../shared/model/d3/node";
 import { D3Service } from "../shared/services/d3.service";
 import { GraphEditMode } from "../shared/enums/graph-edit-mode";
-import { PcNode } from "../shared/model/d3/pc-node";
-import { RouterNode } from "../shared/model/d3/router-node";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { NetworkService } from "../shared/services/network-service";
 import { HostConfigurator } from "../shared/interfaces/host-configurator";
 import { StartSimulationComponent } from "../start-simulation/start-simulation.component";
 import { NetworkSimulation } from "../shared/model/network/network-simulation";
+import { GraphApiService } from "../shared/services/graph-api-service";
 
 @Component({
   selector: "graph",
@@ -28,8 +27,8 @@ import { NetworkSimulation } from "../shared/model/network/network-simulation";
   styleUrls: ["./graph.component.scss"]
 })
 export class GraphComponent implements OnInit, AfterViewInit {
-  @Input("nodes") nodes: Node[]=[];
-  @Input("links") links: Link[]=[];
+  @Input("nodes") nodes: Node[] = [];
+  @Input("links") links: Link[] = [];
   public graph: ForceDirectedGraph;
   private _options: { width; height } = { width: 800, height: 600 };
   graphEditMode: GraphEditMode = GraphEditMode.none;
@@ -37,6 +36,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
   clickedNode2: Node;
   clickedNodeCount: number = 0;
   networkSimulation: NetworkSimulation;
+  public databaseSimulationId: number = 0;
 
   @HostListener("window:resize", ["$event"])
   onResize(event) {
@@ -47,6 +47,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
     private d3Service: D3Service,
     private graphService: GraphService,
     private networkService: NetworkService,
+    private apiService: GraphApiService,
     private ref: ChangeDetectorRef,
     private modalService: NgbModal
   ) {}
@@ -165,7 +166,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
     this.restartGraphAfterNodeAdd(newNodes);
   }
 
-  onAddSwitch(e){
+  onAddSwitch(e) {
     let newNodes = this.graphService.addSwitchNode(this.graph, this.nodes);
     this.nodes = [];
     this.restartGraphAfterNodeAdd(newNodes);
@@ -208,5 +209,13 @@ export class GraphComponent implements OnInit, AfterViewInit {
         );
       }
     });
+  }
+
+  onSaveSimulation(e) {
+    this.apiService.saveSimulation(
+      this.nodes,
+      this.links,
+      this.databaseSimulationId
+    );
   }
 }

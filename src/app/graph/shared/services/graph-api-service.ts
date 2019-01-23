@@ -10,15 +10,32 @@ import { RouterInterfaceDTO } from "../model/dto/router-interface";
 import { RouterInterface } from "../model/network/router-interface";
 import { RouterConfiguration } from "../model/network/router-configuration";
 import { Switch } from "../model/dto/switch";
+import { SwitchNode } from "../model/d3/switch-node";
+import { PcSwitch } from "../model/dto/pc-switch";
+import { RouterSwitch } from "../model/dto/router-switch";
 
 @Injectable()
 export class GraphApiService {
   public saveSimulation(nodes: Node[], links: Link[], simulationId: number) {
     let simulation: Simulation = new Simulation();
     simulation.id = simulationId;
+    simulation.pcs = this.getPcs(nodes);
+    simulation.routers = this.getRouters(nodes);
+    simulation.switches = this.getSwitches(nodes);
+    simulation.pcSwitches = this.getPcSwitches(
+      simulation.pcs,
+      simulation.switches,
+      links
+    );
+    simulation.routerSwitches = this.getRouterSwitch(
+      simulation.routers,
+      simulation.switches,
+      links
+    );
+    debugger;
   }
 
-  private getPcNodes(nodes: Node[]): Pc[] {
+  private getPcs(nodes: Node[]): Pc[] {
     let pcs: Pc[] = [];
 
     nodes.forEach(node => {
@@ -30,7 +47,8 @@ export class GraphApiService {
           pcNumber: pcNode.pcNumber,
           nodeNumber: pcNode.id,
           ip: pcNode.pcConfiguration ? pcNode.pcConfiguration.ip : "",
-          mask: pcNode.pcConfiguration ? pcNode.pcConfiguration.mask : ""
+          mask: pcNode.pcConfiguration ? pcNode.pcConfiguration.mask : "",
+          gateway: pcNode.pcConfiguration ? pcNode.pcConfiguration.gateway : ""
         });
       }
     });
@@ -38,7 +56,7 @@ export class GraphApiService {
     return pcs;
   }
 
-  private getRouterNodes(nodes: Node[]) {
+  private getRouters(nodes: Node[]) {
     let routers: Router[] = [];
 
     nodes.forEach(node => {
@@ -76,23 +94,103 @@ export class GraphApiService {
     return interfacesDTO;
   }
 
-//   private getSwitchNodes(nodes: Node[]): Switch[] {
-//     let switches: Switch[] = [];
+  private getSwitches(nodes: Node[]): Switch[] {
+    let switches: Switch[] = [];
 
-//     nodes.forEach(node => {
-//       if (node instanceof PcNode) {
-//         let pcNode = node as PcNode;
-//         switches.push({
-//           id: pcNode.databaseId,
-//           name: pcNode.getName(),
-//           pcNumber: pcNode.pcNumber,
-//           nodeNumber: pcNode.id,
-//           ip: pcNode.pcConfiguration ? pcNode.pcConfiguration.ip : "",
-//           mask: pcNode.pcConfiguration ? pcNode.pcConfiguration.mask : ""
-//         });
-//       }
-//     });
+    nodes.forEach(node => {
+      if (node instanceof SwitchNode) {
+        let switchNode = node as SwitchNode;
+        switches.push({
+          id: switchNode.databaseId,
+          name: switchNode.getName(),
+          nodeNumber: switchNode.id,
+          switchNumber: switchNode.switchNumber
+        });
+      }
+    });
 
-//     return switches;
-//   }
+    return switches;
+  }
+
+  private getPcSwitches(pcs: Pc[], switches: Switch[], link: Link[]) {
+    let pcSwitch: PcSwitch[] = [];
+
+    link.forEach(element => {
+      if (
+        element.source instanceof SwitchNode &&
+        element.target instanceof PcNode
+      ) {
+        let switchh = switches.find(
+          x => x.nodeNumber == (element.source as SwitchNode).id
+        );
+        let pc = pcs.find(x => x.nodeNumber == (element.target as PcNode).id);
+        pcSwitch.push({
+          pc: pc,
+          switch: switchh
+        });
+      }
+
+      if (
+        element.source instanceof PcNode &&
+        element.target instanceof SwitchNode
+      ) {
+        let pc = pcs.find(x => x.nodeNumber == (element.source as PcNode).id);
+        let switchh = switches.find(
+          x => x.nodeNumber == (element.target as SwitchNode).id
+        );
+
+        pcSwitch.push({
+          pc: pc,
+          switch: switchh
+        });
+      }
+    });
+
+    return pcSwitch;
+  }
+
+  private getRouterSwitch(
+    routers: Router[],
+    switches: Switch[],
+    link: Link[]
+  ): RouterSwitch[] {
+    let routerSwitch: RouterSwitch[] = [];
+
+    link.forEach(element => {
+      if (
+        element.source instanceof SwitchNode &&
+        element.target instanceof RouterNode
+      ) {
+        let switchh = switches.find(
+          x => x.nodeNumber == (element.source as SwitchNode).id
+        );
+        let router = routers.find(
+          x => x.nodeNumber == (element.target as RouterNode).id
+        );
+        routerSwitch.push({
+          router: router,
+          switch: switchh
+        });
+      }
+
+      if (
+        element.source instanceof RouterNode &&
+        element.target instanceof SwitchNode
+      ) {
+        let router = routers.find(
+          x => x.nodeNumber == (element.source as RouterNode).id
+        );
+        let switchh = switches.find(
+          x => x.nodeNumber == (element.target as SwitchNode).id
+        );
+
+        routerSwitch.push({
+          router: router,
+          switch: switchh
+        });
+      }
+    });
+
+    return routerSwitch;
+  }
 }

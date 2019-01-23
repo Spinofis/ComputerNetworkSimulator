@@ -1,6 +1,5 @@
 import { Node } from "./node";
 import { NodeColor } from "../../enums/node-color";
-import { PcConfiguration } from "../network/pc-configuration";
 import { Host } from "../../interfaces/host";
 import { HostConfiguration } from "../../abstract/host-configuration";
 import { NodeSimulationState } from "../../enums/node-simulation-state";

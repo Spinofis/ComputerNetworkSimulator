@@ -17,7 +17,8 @@ import { ValidatorService } from "./shared/services/validator-service";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { AgGridModule } from "ag-grid-angular";
 import { StartSimulationComponent } from "./start-simulation/start-simulation.component";
-import { GraphSavedListComponent } from './graph-saved-list/graph-saved-list.component';
+import { GraphSavedListComponent } from "./graph-saved-list/graph-saved-list.component";
+import { GraphApiService } from "./shared/services/graph-api-service";
 
 @NgModule({
   imports: [
@@ -39,14 +40,13 @@ import { GraphSavedListComponent } from './graph-saved-list/graph-saved-list.com
     StartSimulationComponent,
     GraphSavedListComponent
   ],
-  providers: [D3Service, GraphService, NetworkService, ValidatorService],
-  // exports: [
-  //   GraphComponent,
-  //   LinkVisualComponent,
-  //   NodeVisualComponent,
-  //   DraggableDirective,
-  //   ZoomableDirective
-  // ],
+  providers: [
+    D3Service,
+    GraphService,
+    NetworkService,
+    ValidatorService,
+    GraphApiService
+  ],
   entryComponents: [
     PcConfiguratorComponent,
     RouterConfiguratorComponent,

@@ -4,6 +4,7 @@
   (addRouter)="onAddRouter($event)"
   (addSwitch)="onAddSwitch($event)"
   (onStartSimulation)="onStartSimulation($event)"
+  (onSaveSimulation)="onSaveSimulation($event)"
 ></app-graph-menu>
 <svg #svg [attr.width]="_options.width" [attr.height]="_options.height">
   <g [zoomableOf]="svg">
