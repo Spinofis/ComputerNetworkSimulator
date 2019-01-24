@@ -1,3 +1,15 @@
-<p>
-  graph-saved-list works!
-</p>
+<div class="simulation-list">
+  <div class="card-body">
+    <button (click)="getSelectedRows()">Załaduj symulacje</button>
+  </div>
+  <div class="card-body">
+    <ag-grid-angular
+      #gridSimulations
+      style="width: 100%; height: 500px;"
+      class="ag-theme-balham"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+    >
+    </ag-grid-angular>
+  </div>
+</div>

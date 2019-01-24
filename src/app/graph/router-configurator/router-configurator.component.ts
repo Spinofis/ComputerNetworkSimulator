@@ -19,11 +19,11 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
 
   columnDefs = [
     { headerName: "Interfejs", field: "interface" },
-    { headerName: "Ip interfejsu", field: "ip", editable: true },   
+    { headerName: "Ip interfejsu", field: "ip", editable: true },
     { headerName: "Ip sieci", field: "networkIp", editable: true },
     { headerName: "Maska", field: "mask", editable: true },
-    { headerName: "Id hosta", field: "hostId" },
-    { headerName: "Id db", field: "databaseId" }
+    { headerName: "Id hosta", field: "hostId", hide: true },
+    { headerName: "Id db", field: "databaseId", hide: true }
   ];
 
   constructor(
@@ -97,7 +97,7 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
       interface: node.getName() + " / " + connectedNode.getName(),
       ip: "",
       mask: "",
-      networkIp:""
+      networkIp: ""
     };
   }
 
@@ -107,17 +107,17 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
       interface: routerInterface.connectionName,
       ip: routerInterface.ip,
       mask: routerInterface.mask,
-      networkIp:routerInterface.networkIp
+      networkIp: routerInterface.networkIp
     };
   }
 
   private gridObjectToRouterInterface(gridObject) {
     return {
-      databaseId:gridObject.databaseId,
+      databaseId: gridObject.databaseId,
       connectionName: gridObject.interface,
       ip: gridObject.ip,
       mask: gridObject.mask,
-      networkIp:gridObject.networkIp,
+      networkIp: gridObject.networkIp,
       nodeConnectedToId: gridObject.hostId
     };
   }

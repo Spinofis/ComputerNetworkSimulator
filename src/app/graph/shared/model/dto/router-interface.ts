@@ -4,4 +4,5 @@ export class RouterInterfaceDTO {
   public ipHost: string;
   public ipNet: string;
   public mask: string;
+  public connectedNodeNumber: string;
 }

@@ -5,7 +5,8 @@ import {
   HostListener,
   ChangeDetectionStrategy,
   OnInit,
-  AfterViewInit
+  AfterViewInit,
+  OnDestroy
 } from "@angular/core";
 import { GraphService } from "../shared/services/graph-service";
 import { Link } from "../shared/model/d3/link";
@@ -19,6 +20,11 @@ import { HostConfigurator } from "../shared/interfaces/host-configurator";
 import { StartSimulationComponent } from "../start-simulation/start-simulation.component";
 import { NetworkSimulation } from "../shared/model/network/network-simulation";
 import { GraphApiService } from "../shared/services/graph-api-service";
+import { Subject } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
+import { takeUntil } from "rxjs/operators";
+import { GetGraphApiHelperService } from "../shared/services/get-api-graph-helper.service";
+import { Simulation } from "../shared/model/dto/simulation";
 
 @Component({
   selector: "graph",
@@ -26,7 +32,7 @@ import { GraphApiService } from "../shared/services/graph-api-service";
   templateUrl: "./graph.component.html",
   styleUrls: ["./graph.component.scss"]
 })
-export class GraphComponent implements OnInit, AfterViewInit {
+export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input("nodes") nodes: Node[] = [];
   @Input("links") links: Link[] = [];
   public graph: ForceDirectedGraph;
@@ -37,6 +43,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
   clickedNodeCount: number = 0;
   networkSimulation: NetworkSimulation;
   public databaseSimulationId: number = 0;
+  private subscriptionRoute = new Subject();
+  private subscriptionApi = new Subject();
 
   @HostListener("window:resize", ["$event"])
   onResize(event) {
@@ -49,11 +57,36 @@ export class GraphComponent implements OnInit, AfterViewInit {
     private networkService: NetworkService,
     private apiService: GraphApiService,
     private ref: ChangeDetectorRef,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private activatedRoute: ActivatedRoute,
+    private getGraphApiHelperService: GetGraphApiHelperService
   ) {}
 
   ngOnInit() {
     this.preapreSimulation();
+    this.loadData();
+  }
+
+  ngOnDestroy() {
+    this.subscriptionRoute.next();
+    this.subscriptionRoute.complete();
+    this.subscriptionApi.next();
+    this.subscriptionApi.complete();
+  }
+
+  loadData() {
+    this.activatedRoute.params
+      .pipe(takeUntil(this.subscriptionRoute))
+      .subscribe(params => {
+        this.databaseSimulationId += params["simulationId"] as number;
+        this.apiService
+          .getSimulation(this.databaseSimulationId)
+          .pipe(takeUntil(this.subscriptionApi))
+          .subscribe(data => {
+            this.loadSimulation(data);
+          });
+        if (this.databaseSimulationId == 0) GraphService.resetIds();
+      });
   }
 
   preapreSimulation() {
@@ -157,22 +190,22 @@ export class GraphComponent implements OnInit, AfterViewInit {
   onAddPc(e) {
     let newNodes = this.graphService.addPcNode(this.graph, this.nodes);
     this.nodes = [];
-    this.restartGraphAfterNodeAdd(newNodes);
+    this.addNewNodes(newNodes);
   }
 
   onAddRouter(e) {
     let newNodes = this.graphService.addRouterNode(this.graph, this.nodes);
     this.nodes = [];
-    this.restartGraphAfterNodeAdd(newNodes);
+    this.addNewNodes(newNodes);
   }
 
   onAddSwitch(e) {
     let newNodes = this.graphService.addSwitchNode(this.graph, this.nodes);
     this.nodes = [];
-    this.restartGraphAfterNodeAdd(newNodes);
+    this.addNewNodes(newNodes);
   }
 
-  private restartGraphAfterNodeAdd(newNodes: Node[]) {
+  private addNewNodes(newNodes: Node[]) {
     setTimeout(() => {
       this.nodes = newNodes;
       this.preapreSimulation();
@@ -214,6 +247,20 @@ export class GraphComponent implements OnInit, AfterViewInit {
   onSaveSimulation(e) {
     this.apiService
       .saveSimulation(this.nodes, this.links, this.databaseSimulationId)
-      .subscribe();
+      .subscribe(data=>{
+        alert("Zapisano symulacje");
+      });
+  }
+
+  private loadSimulation(simulation: Simulation) {
+    this.graph.simulation.stop();
+    let nodes = this.getGraphApiHelperService.getNodes(simulation);
+    GraphService.updateIds(nodes);
+    this.addNewNodes(nodes);
+    this.links = this.getGraphApiHelperService.getLinks(
+      simulation.links,
+      this.nodes
+    );
+    this.afterGraphEdit();
   }
 }

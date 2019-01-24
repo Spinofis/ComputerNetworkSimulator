@@ -218,4 +218,27 @@ export class GraphService {
     );
     return newNodes;
   }
+
+  public static updateIds(nodes: Node[]) {
+    GraphService.nodeId = nodes.length + 1;
+
+    nodes.forEach(element => {
+      if (element instanceof PcNode) GraphService.pcId++;
+    });
+
+    nodes.forEach(element => {
+      if (element instanceof RouterNode) GraphService.routerId++;
+    });
+
+    nodes.forEach(element => {
+      if (element instanceof SwitchNode) GraphService.switchId++;
+    });
+  }
+
+  public static resetIds() {
+    GraphService.nodeId = 1;
+    GraphService.pcId = 1;
+    GraphService.routerId = 1;
+    GraphService.switchId = 1;
+  }
 }

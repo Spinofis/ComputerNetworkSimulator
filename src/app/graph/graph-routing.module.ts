@@ -5,7 +5,7 @@ import { GraphSavedListComponent } from './graph-saved-list/graph-saved-list.com
 
 const routes: Routes = [
   {
-    path: "graph-new",
+    path: "graph-edit/:simulationId",
     component: GraphComponent
   },
   {

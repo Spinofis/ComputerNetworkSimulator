@@ -19,6 +19,8 @@ import { AgGridModule } from "ag-grid-angular";
 import { StartSimulationComponent } from "./start-simulation/start-simulation.component";
 import { GraphSavedListComponent } from "./graph-saved-list/graph-saved-list.component";
 import { GraphApiService } from "./shared/services/graph-api-service";
+import { HttpClientModule } from "@angular/common/http";
+import { GetGraphApiHelperService } from "./shared/services/get-api-graph-helper.service";
 
 @NgModule({
   imports: [
@@ -45,7 +47,8 @@ import { GraphApiService } from "./shared/services/graph-api-service";
     GraphService,
     NetworkService,
     ValidatorService,
-    GraphApiService
+    GraphApiService,
+    GetGraphApiHelperService
   ],
   entryComponents: [
     PcConfiguratorComponent,

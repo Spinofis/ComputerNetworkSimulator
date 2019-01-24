@@ -9,7 +9,7 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class BaseService {
-  baseUrl: string = "https://localhost:44372/api";
+  private baseUrl: string = "https://localhost:44372/api";
 
   constructor(private http: HttpClient) {}
 
@@ -20,5 +20,10 @@ export class BaseService {
       })
     };
     return this.http.post(this.baseUrl + url, body, postOptions);
+  }
+
+  protected get(url: string, httpParams: HttpParams = null): Observable<any> {
+    const options = httpParams ? { params: httpParams } : {};
+    return this.http.get(this.baseUrl + url, options);
   }
 }
