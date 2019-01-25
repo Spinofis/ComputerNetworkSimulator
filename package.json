@@ -26,6 +26,8 @@
     "core-js": "^2.5.4",
     "d3": "^5.7.0",
     "font-awesome": "^4.7.0",
+    "ip-range-check": "0.0.2",
+    "netmask": "^1.0.6",
     "ngx-bootstrap": "^3.1.4",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",

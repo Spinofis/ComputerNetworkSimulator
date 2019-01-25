@@ -21,8 +21,8 @@ export class RouterNode extends Node {
   }
 
   public getName() {
-    // return "Router_" + this.routerNumber;
-    return this.id;
+    return "Router_" + this.routerNumber;
+    // return this.id;
   }
 
   public getR() {

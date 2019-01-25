@@ -3,6 +3,7 @@ import { GraphComponent } from "./graph/graph/graph.component";
 import { Link } from "./graph/shared/model/d3/link";
 import { Node } from "./graph/shared/model/d3/node";
 import { Router, NavigationEnd } from "@angular/router";
+import { Netmask } from "netmask";
 
 @Component({
   selector: "body",
@@ -24,5 +25,9 @@ export class AppComponent {
       }
       window.scrollTo(0, 0);
     });
+
+    const block = new Netmask("123.123.208.0/20");
+    const ip = "123.123.208.0";
+    console.log(block.contains(ip));
   }
 }

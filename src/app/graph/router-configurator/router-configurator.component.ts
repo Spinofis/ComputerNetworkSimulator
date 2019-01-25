@@ -21,7 +21,7 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
     { headerName: "Interfejs", field: "interface" },
     { headerName: "Ip interfejsu", field: "ip", editable: true },
     { headerName: "Ip sieci", field: "networkIp", editable: true },
-    { headerName: "Maska", field: "mask", editable: true },
+    // { headerName: "Maska", field: "mask", editable: true },
     { headerName: "Id hosta", field: "hostId", hide: true },
     { headerName: "Id db", field: "databaseId", hide: true }
   ];
@@ -63,8 +63,9 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
     let isValid: boolean = true;
     this.gridDataSource.forEach(element => {
       if (!this.validatorService.isIpValid(element.ip)) isValid = false;
-      if (!this.validatorService.isIpValid(element.mask)) isValid = false;
-      if (!this.validatorService.isIpValid(element.networkIp)) isValid = false;
+      // if (!this.validatorService.isIpValid(element.mask)) isValid = false;
+      if (!this.validatorService.isIpWithMaskValid(element.networkIp))
+        isValid = false;
     });
 
     return isValid;

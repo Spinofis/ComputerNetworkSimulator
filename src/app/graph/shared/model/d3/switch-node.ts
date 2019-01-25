@@ -19,8 +19,8 @@ export class SwitchNode extends Node implements Host {
   }
 
   public getName() {
-    // return "PC_" + this.pcNumber;
-    return this.id;
+    return "Switch_" + this.switchNumber;
+    // return this.id;
   }
 
   public getR() {

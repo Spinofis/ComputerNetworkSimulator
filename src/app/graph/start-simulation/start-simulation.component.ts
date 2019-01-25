@@ -10,7 +10,6 @@ import {
 import { PcNode } from "../shared/model/d3/pc-node";
 import { NetworkSimulation } from "../shared/model/network/network-simulation";
 import { ValidatorService } from "../shared/services/validator-service";
-import { stringify } from "@angular/compiler/src/util";
 
 @Component({
   selector: "app-start-simulation",

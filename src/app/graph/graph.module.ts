@@ -21,6 +21,7 @@ import { GraphSavedListComponent } from "./graph-saved-list/graph-saved-list.com
 import { GraphApiService } from "./shared/services/graph-api-service";
 import { HttpClientModule } from "@angular/common/http";
 import { GetGraphApiHelperService } from "./shared/services/get-api-graph-helper.service";
+import { SimulationComponent } from './simulation/simulation.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { GetGraphApiHelperService } from "./shared/services/get-api-graph-helper
     PcConfiguratorComponent,
     RouterConfiguratorComponent,
     StartSimulationComponent,
-    GraphSavedListComponent
+    GraphSavedListComponent,
+    SimulationComponent
   ],
   providers: [
     D3Service,

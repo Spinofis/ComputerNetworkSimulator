@@ -6,8 +6,20 @@ export class ValidatorService {
   private ipPattern: string =
     "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
 
+  private netIpWithMaskPattern: string =
+    "^([0-9]{1,3}\.){3}[0-9]{1,3}(\/([0-9]|[1-2][0-9]|3[0-2]))?$";
+
   public getIpPattern(): string {
     return this.ipPattern;
+  }
+
+  public getIpWithMasPattern() {
+    return this.netIpWithMaskPattern;
+  }
+
+  isIpWithMaskValid(value: string) {
+    let regex = new RegExp(this.netIpWithMaskPattern);
+    return regex.test(value);
   }
 
   public isIpValid(value: string): boolean {

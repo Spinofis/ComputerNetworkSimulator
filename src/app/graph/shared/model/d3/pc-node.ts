@@ -21,7 +21,7 @@ export class PcNode extends Node implements Host {
   }
 
   public getName() {
-    return this.id;
+    return "Pc_" + this.pcNumber;
   }
 
   public getR() {
