@@ -19,9 +19,8 @@ import { AgGridModule } from "ag-grid-angular";
 import { StartSimulationComponent } from "./start-simulation/start-simulation.component";
 import { GraphSavedListComponent } from "./graph-saved-list/graph-saved-list.component";
 import { GraphApiService } from "./shared/services/graph-api-service";
-import { HttpClientModule } from "@angular/common/http";
 import { GetGraphApiHelperService } from "./shared/services/get-api-graph-helper.service";
-import { SimulationComponent } from './simulation/simulation.component';
+import { LogWindowComponent } from "./log-window/log-window.component";
 
 @NgModule({
   imports: [
@@ -41,8 +40,8 @@ import { SimulationComponent } from './simulation/simulation.component';
     PcConfiguratorComponent,
     RouterConfiguratorComponent,
     StartSimulationComponent,
+    LogWindowComponent,
     GraphSavedListComponent,
-    SimulationComponent
   ],
   providers: [
     D3Service,
@@ -55,7 +54,8 @@ import { SimulationComponent } from './simulation/simulation.component';
   entryComponents: [
     PcConfiguratorComponent,
     RouterConfiguratorComponent,
-    StartSimulationComponent
+    StartSimulationComponent,
+    LogWindowComponent
   ]
 })
 export class GraphModule {}

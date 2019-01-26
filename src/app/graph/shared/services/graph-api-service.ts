@@ -7,6 +7,7 @@ import { ApiUrl } from "../enums/api-url";
 import { Observable, of, BehaviorSubject } from "rxjs";
 import { SaveGrapHelperService } from "./save-graph-helper-service";
 import { HttpParams } from "@angular/common/http";
+import { disableBindings } from '@angular/core/src/render3';
 
 @Injectable()
 export class GraphApiService extends BaseService {
@@ -28,6 +29,7 @@ export class GraphApiService extends BaseService {
     simulation.switches = this.saveGraphHelper.getSwitches(nodes);
 
     simulation.links = this.saveGraphHelper.getLinks(links);
+    debugger;
     return this.post(ApiUrl.saveSimulation, simulation);
   }
 

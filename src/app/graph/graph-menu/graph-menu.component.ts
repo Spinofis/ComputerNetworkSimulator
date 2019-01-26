@@ -26,6 +26,7 @@ export class GraphMenu implements OnInit {
     string
   >();
   @Output() onSaveSimulation: EventEmitter<string> = new EventEmitter<string>();
+  @Output() logSimulation: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {}
 
@@ -83,6 +84,10 @@ export class GraphMenu implements OnInit {
     this.addSwitch.emit("add switch");
   }
 
+  logSimulation_Click() {
+    this.logSimulation.emit("log simualtion");
+  }
+
   startSimulation() {
     this.onStartSimulation.emit("start simulation");
   }
@@ -101,6 +106,5 @@ export class GraphMenu implements OnInit {
 
   saveSimulation() {
     this.onSaveSimulation.emit("save simulation");
-    
   }
 }

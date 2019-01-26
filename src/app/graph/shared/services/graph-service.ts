@@ -220,18 +220,34 @@ export class GraphService {
   }
 
   public static updateIds(nodes: Node[]) {
-    GraphService.nodeId = nodes.length + 1;
-
     nodes.forEach(element => {
-      if (element instanceof PcNode) GraphService.pcId++;
+      var id = +element.id;
+      if (id >= GraphService.nodeId) {
+        GraphService.nodeId = id + 1;
+      }
     });
 
     nodes.forEach(element => {
-      if (element instanceof RouterNode) GraphService.routerId++;
+      if (element instanceof PcNode) {
+        var pc = element as PcNode;
+        if (element.pcNumber >= GraphService.pcId)
+          GraphService.pcId = element.pcNumber + 1;
+      }
     });
 
     nodes.forEach(element => {
-      if (element instanceof SwitchNode) GraphService.switchId++;
+      if (element instanceof RouterNode) {
+        var router = element as RouterNode;
+        if (router.routerNumber >= GraphService.routerId)
+          GraphService.routerId = element.routerNumber + 1;
+      }
+    });
+
+    nodes.forEach(element => {
+      if (element instanceof SwitchNode) {
+        if (element.switchNumber >= GraphService.switchId)
+          GraphService.switchId = element.switchNumber + 1;
+      }
     });
   }
 

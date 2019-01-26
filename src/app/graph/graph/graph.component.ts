@@ -25,6 +25,7 @@ import { ActivatedRoute } from "@angular/router";
 import { takeUntil } from "rxjs/operators";
 import { GetGraphApiHelperService } from "../shared/services/get-api-graph-helper.service";
 import { Simulation } from "../shared/model/dto/simulation";
+import { LogWindowComponent } from "../log-window/log-window.component";
 
 @Component({
   selector: "graph",
@@ -79,13 +80,14 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(takeUntil(this.subscriptionRoute))
       .subscribe(params => {
         this.databaseSimulationId += params["simulationId"] as number;
-        this.apiService
-          .getSimulation(this.databaseSimulationId)
-          .pipe(takeUntil(this.subscriptionApi))
-          .subscribe(data => {
-            this.loadSimulation(data);
-          });
         if (this.databaseSimulationId == 0) GraphService.resetIds();
+        else
+          this.apiService
+            .getSimulation(this.databaseSimulationId)
+            .pipe(takeUntil(this.subscriptionApi))
+            .subscribe(data => {
+              this.loadSimulation(data);
+            });
       });
   }
 
@@ -247,9 +249,13 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
   onSaveSimulation(e) {
     this.apiService
       .saveSimulation(this.nodes, this.links, this.databaseSimulationId)
-      .subscribe(data=>{
+      .subscribe(data => {
         alert("Zapisano symulacje");
       });
+  }
+
+  onLogSimulation(e) {
+    const modalRef = this.modalService.open(LogWindowComponent);
   }
 
   private loadSimulation(simulation: Simulation) {

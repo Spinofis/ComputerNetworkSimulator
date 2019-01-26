@@ -73,11 +73,13 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
 
   private prepareGridDataSource(node: Node) {
     let routerConfiguration: RouterConfiguration = node.getConfiguration();
+    // debugger;
     if (routerConfiguration) {
       routerConfiguration.interfaces.forEach(element => {
         if (!node.connectedNodes.find(x => x.id == element.nodeConnectedToId))
           routerConfiguration.interfaces.splice(
-            routerConfiguration.interfaces.indexOf(element, 1)
+            routerConfiguration.interfaces.indexOf(element),
+            1
           );
       });
 
@@ -108,7 +110,8 @@ export class RouterConfiguratorComponent implements OnInit, HostConfigurator {
       interface: routerInterface.connectionName,
       ip: routerInterface.ip,
       mask: routerInterface.mask,
-      networkIp: routerInterface.networkIp
+      networkIp: routerInterface.networkIp,
+      databaseId: routerInterface.databaseId
     };
   }
 
