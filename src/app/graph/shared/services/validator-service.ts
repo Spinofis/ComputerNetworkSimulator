@@ -160,64 +160,64 @@ export class ValidatorService {
         if (connectedNode instanceof SwitchNode) {
           this.validateLocalSubnet(connectedNode, router);
         } else if (connectedNode instanceof RouterNode) {
-          // this.validateGloabalSubnet(router, connectedNode);
+          this.validateGloabalSubnet(router, connectedNode);
         }
       });
     });
   }
 
-  // private validateGloabalSubnet(
-  //   router: RouterNode,
-  //   connectedRouter: RouterNode
-  // ) {
-  //   let routerInterface2: RouterInterface;
-  //   let routerInterface1: RouterInterface;
+  private validateGloabalSubnet(
+    router: RouterNode,
+    connectedRouter: RouterNode
+  ) {
+    let routerInterface2: RouterInterface;
+    let routerInterface1: RouterInterface;
 
-  //   var configuration1 = router.getConfiguration();
-  //   if (configuration1 && configuration1.interfaces) {
-  //     routerInterface1 = configuration1.interfaces.find(
-  //       x => x.nodeConnectedToId == connectedRouter.id
-  //     );
-  //   }
+    var configuration1 = router.getConfiguration();
+    if (configuration1 && configuration1.interfaces) {
+      routerInterface1 = configuration1.interfaces.find(
+        x => x.nodeConnectedToId == connectedRouter.id
+      );
+    }
 
-  //   var configuration2 = connectedRouter.getConfiguration();
-  //   if (configuration2 && configuration2.interfaces) {
-  //     routerInterface2 = configuration2.interfaces.find(
-  //       x => x.nodeConnectedToId == router.id
-  //     );
-  //   }
+    var configuration2 = connectedRouter.getConfiguration();
+    if (configuration2 && configuration2.interfaces) {
+      routerInterface2 = configuration2.interfaces.find(
+        x => x.nodeConnectedToId == router.id
+      );
+    }
 
-  //   if (!routerInterface1 || !routerInterface2) {
-  //     if (routerInterface1.networkIp != routerInterface2.networkIp) {
-  //       this.errors.push(
-  //         "Błąd w połączeiu " +
-  //           router.getName() +
-  //           " i " +
-  //           connectedRouter.getName()
-  //       );
-  //     }
+    if (!routerInterface1 || !routerInterface2) {
+      if (routerInterface1.networkIp != routerInterface2.networkIp) {
+        this.errors.push(
+          "Błąd w połączeiu " +
+            router.getName() +
+            " i " +
+            connectedRouter.getName()
+        );
+      }
 
-  //     if (
-  //       !this.isIpBelongToNet(routerInterface1.ip, routerInterface1.networkIp)
-  //     ) {
-  //       this.errors.push(
-  //         routerInterface1.ip +
-  //           " nie należy do sieci " +
-  //           routerInterface1.networkIp
-  //       );
-  //     }
+      // if (
+      //   !this.isIpBelongToNet(routerInterface1.ip, routerInterface1.networkIp)
+      // ) {
+      //   this.errors.push(
+      //     routerInterface1.ip +
+      //       " nie należy do sieci " +
+      //       routerInterface1.networkIp
+      //   );
+      // }
 
-  //     if (
-  //       !this.isIpBelongToNet(routerInterface2.ip, routerInterface2.networkIp)
-  //     ) {
-  //       this.errors.push(
-  //         routerInterface2.ip +
-  //           " nie należy do sieci " +
-  //           routerInterface2.networkIp
-  //       );
-  //     }
-  //   }
-  // }
+      // if (
+      //   !this.isIpBelongToNet(routerInterface2.ip, routerInterface2.networkIp)
+      // ) {
+      //   this.errors.push(
+      //     routerInterface2.ip +
+      //       " nie należy do sieci " +
+      //       routerInterface2.networkIp
+      //   );
+      // }
+    }
+  }
 
   private validateLocalSubnet(switchNode: SwitchNode, router: RouterNode) {
     var configuration = router.getConfiguration();
@@ -226,15 +226,15 @@ export class ValidatorService {
         x => x.nodeConnectedToId == switchNode.id
       );
 
-      // if (
-      //   !this.isIpBelongToNet(routerInterface.ip, routerInterface.networkIp)
-      // ) {
-      //   this.errors.push(
-      //     routerInterface.ip +
-      //       " nie należy do sieci " +
-      //       routerInterface.networkIp
-      //   );
-      // }
+      if (
+        !this.isIpBelongToNet(routerInterface.ip, routerInterface.networkIp)
+      ) {
+        this.errors.push(
+          routerInterface.ip +
+            " nie należy do sieci " +
+            routerInterface.networkIp
+        );
+      }
 
       if (switchNode.connectedNodes) {
         switchNode.connectedNodes.forEach(element => {
