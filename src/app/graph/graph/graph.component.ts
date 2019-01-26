@@ -26,6 +26,7 @@ import { takeUntil } from "rxjs/operators";
 import { GetGraphApiHelperService } from "../shared/services/get-api-graph-helper.service";
 import { Simulation } from "../shared/model/dto/simulation";
 import { LogWindowComponent } from "../log-window/log-window.component";
+import { ValidatorService } from "../shared/services/validator-service";
 
 @Component({
   selector: "graph",
@@ -43,6 +44,7 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
   clickedNode2: Node;
   clickedNodeCount: number = 0;
   networkSimulation: NetworkSimulation;
+  simulationErrors: string[] = [];
   public databaseSimulationId: number = 0;
   private subscriptionRoute = new Subject();
   private subscriptionApi = new Subject();
@@ -60,7 +62,8 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
     private ref: ChangeDetectorRef,
     private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
-    private getGraphApiHelperService: GetGraphApiHelperService
+    private getGraphApiHelperService: GetGraphApiHelperService,
+    private validatorService: ValidatorService
   ) {}
 
   ngOnInit() {
@@ -229,13 +232,18 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onStartSimulation(e) {
+    this.clearSimulationMarks();
     this.graphService.setConnectedNodesForAllNodes(this.nodes, this.links);
     const modalRef = this.modalService.open(StartSimulationComponent);
     (modalRef.componentInstance as StartSimulationComponent).initWindow(
       this.graphService.getPcNodesFormNodes(this.nodes)
     );
     modalRef.result.then(networkSimulation => {
-      if (networkSimulation) {
+      this.simulationErrors = this.validatorService.validateSimulation(
+        this.nodes
+      );
+      // debugger;
+      if (networkSimulation && this.simulationErrors.length == 0) {
         this.networkService.startSimulation(
           networkSimulation.nodeFrom,
           networkSimulation.nodeTo,
@@ -256,6 +264,9 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onLogSimulation(e) {
     const modalRef = this.modalService.open(LogWindowComponent);
+    (modalRef.componentInstance as LogWindowComponent).setValidationResult(
+      this.simulationErrors
+    );
   }
 
   private loadSimulation(simulation: Simulation) {
@@ -268,5 +279,11 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
       this.nodes
     );
     this.afterGraphEdit();
+  }
+
+  private clearSimulationMarks() {
+    this.nodes.forEach(element => {
+      element.setNoneSimulationSate();
+    });
   }
 }

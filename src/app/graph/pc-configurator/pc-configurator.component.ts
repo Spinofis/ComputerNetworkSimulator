@@ -42,13 +42,13 @@ export class PcConfiguratorComponent implements OnInit, HostConfigurator {
           Validators.required
         ]
       ],
-      Mask: [
-        "",
-        [
-          Validators.pattern(this.validatorService.getIpPattern()),
-          Validators.required
-        ]
-      ],
+      // Mask: [
+      //   "",
+      //   [
+      //     Validators.pattern(this.validatorService.getIpPattern()),
+      //     Validators.required
+      //   ]
+      // ],
       Gateway: [
         "",
         [
@@ -68,7 +68,7 @@ export class PcConfiguratorComponent implements OnInit, HostConfigurator {
       let pcConfig: PcConfiguration = this.node.getConfiguration();
       if (pcConfig) {
         this.f["Ip"].setValue(pcConfig.ip);
-        this.f["Mask"].setValue(pcConfig.mask);
+        // this.f["Mask"].setValue(pcConfig.mask);
         this.f["Gateway"].setValue(pcConfig.gateway);
       }
     }
@@ -86,7 +86,7 @@ export class PcConfiguratorComponent implements OnInit, HostConfigurator {
     ) {
       let pcConfiguration: PcConfiguration = new PcConfiguration();
       pcConfiguration.ip = this.f["Ip"].value;
-      pcConfiguration.mask = this.f["Mask"].value;
+      // pcConfiguration.mask = this.f["Mask"].value;
       pcConfiguration.gateway = this.f["Gateway"].value;
       this.node.setConfiguration(pcConfiguration);
       this.activeModal.close();

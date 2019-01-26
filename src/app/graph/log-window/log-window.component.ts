@@ -7,51 +7,22 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ["./log-window.component.scss"]
 })
 export class LogWindowComponent implements OnInit {
-  comunicates:string[]=[];
-  constructor() {
-  }
+  private comunicates: string[] = [];
+  constructor() {}
 
   ngOnInit() {
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
-    this.comunicates.push("wdqwdqwdqwdqwd");
+    this.comunicates.push();
+  }
+
+  public setValidationResult(validationResult: string[]) {
+    if (validationResult.length == 0) {
+      this.comunicates.push(
+        "Symulacja zakończona pomyślnie "
+      );
+    } else {
+      validationResult.forEach(element => {
+        this.comunicates.push(element);
+      });
+    }
   }
 }
