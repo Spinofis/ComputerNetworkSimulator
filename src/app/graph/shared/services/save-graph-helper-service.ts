@@ -19,7 +19,8 @@ export class SaveGrapHelperService {
           id: pcNode.databaseId,
           name: pcNode.getName(),
           pcNumber: pcNode.pcNumber,
-          nodeNumber: pcNode.id
+          nodeNumber: pcNode.id,
+          hostIdentity: pcNode.hostIdentity
         });
       }
     });
@@ -37,7 +38,8 @@ export class SaveGrapHelperService {
           id: routerNode.databaseId,
           name: routerNode.getName(),
           nodeNumber: routerNode.id,
-          routerNumber: routerNode.routerNumber
+          routerNumber: routerNode.routerNumber,
+          hostIdentity: routerNode.hostIdentity
         });
       }
     });
@@ -55,7 +57,8 @@ export class SaveGrapHelperService {
           id: switchNode.databaseId,
           name: switchNode.getName(),
           nodeNumber: switchNode.id,
-          switchNumber: switchNode.switchNumber
+          switchNumber: switchNode.switchNumber,
+          hostIdentity: switchNode.hostIdentity
         });
       }
     });

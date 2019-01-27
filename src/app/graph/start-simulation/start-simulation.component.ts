@@ -9,7 +9,6 @@ import {
 } from "@angular/forms";
 import { PcNode } from "../shared/model/d3/pc-node";
 import { NetworkSimulation } from "../shared/model/network/network-simulation";
-import { ValidatorService } from "../shared/services/validator-service";
 
 @Component({
   selector: "app-start-simulation",
@@ -26,8 +25,7 @@ export class StartSimulationComponent implements OnInit {
 
   constructor(
     public activeModal: NgbActiveModal,
-    private fb: FormBuilder,
-    private validatorService: ValidatorService
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {

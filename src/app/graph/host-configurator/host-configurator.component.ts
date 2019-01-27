@@ -1,12 +1,9 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { Node } from "../shared/model/d3/node";
-import { ValidatorService } from "../shared/services/validator-service";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { validateHostIdentity } from "../shared/validators/validate-host-config";
+import { hasControlErrors } from "../shared/validators/validate-form-group";
 
 @Component({
   selector: "app-host-configurator",
@@ -18,11 +15,7 @@ export class HostConfigurator implements OnInit {
   configurationForm: FormGroup;
   node: Node;
 
-  constructor(
-    public activeModal: NgbActiveModal,
-    private validatorService: ValidatorService,
-    private fb: FormBuilder
-  ) {}
+  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder) {}
 
   ngOnInit() {
     this.buildForm();
@@ -31,27 +24,7 @@ export class HostConfigurator implements OnInit {
 
   buildForm() {
     this.configurationForm = this.fb.group({
-      Ip: [
-        "",
-        [
-          Validators.pattern(this.validatorService.getIpPattern()),
-          Validators.required
-        ]
-      ],
-      // Mask: [
-      //   "",
-      //   [
-      //     Validators.pattern(this.validatorService.getIpPattern()),
-      //     Validators.required
-      //   ]
-      // ],
-      Gateway: [
-        "",
-        [
-          Validators.pattern(this.validatorService.getIpPattern()),
-          Validators.required
-        ]
-      ]
+      HostIdentity: ["", [validateHostIdentity, Validators.required]]
     });
   }
 
@@ -60,14 +33,9 @@ export class HostConfigurator implements OnInit {
   }
 
   loadForm() {
-    // if (this.node) {
-    //   let pcConfig: PcConfiguration = this.node.getConfiguration();
-    //   if (pcConfig) {
-    //     this.f["Ip"].setValue(pcConfig.ip);
-    //     // this.f["Mask"].setValue(pcConfig.mask);
-    //     this.f["Gateway"].setValue(pcConfig.gateway);
-    //   }
-    // }
+    if (this.node) {
+      this.f["HostIdentity"].setValue(this.node.hostIdentity);
+    }
   }
 
   get f() {
@@ -75,18 +43,11 @@ export class HostConfigurator implements OnInit {
   }
 
   save() {
-    // this.submitted = true;
-    // if (
-    //   this.node &&
-    //   !this.validatorService.hasControlErrors(this.configurationForm)
-    // ) {
-    //   let pcConfiguration: PcConfiguration = new PcConfiguration();
-    //   pcConfiguration.ip = this.f["Ip"].value;
-    //   // pcConfiguration.mask = this.f["Mask"].value;
-    //   pcConfiguration.gateway = this.f["Gateway"].value;
-    //   this.node.setConfiguration(pcConfiguration);
-    //   this.activeModal.close();
-    // }
+    this.submitted = true;
+    if (this.node && !hasControlErrors(this.configurationForm)) {
+      this.node.hostIdentity = this.f["HostIdentity"].value;
+      this.activeModal.close();
+    }
   }
 
   btnCancel_Click(e) {

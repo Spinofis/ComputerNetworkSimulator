@@ -11,7 +11,6 @@ import { CommonModule } from "@angular/common";
 import { GraphMenu } from "./graph-menu/graph-menu.component";
 import { NetworkService } from "./shared/services/network-service";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
-import { ValidatorService } from "./shared/services/validator-service";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { AgGridModule } from "ag-grid-angular";
 import { StartSimulationComponent } from "./start-simulation/start-simulation.component";
@@ -43,7 +42,6 @@ import { HostConfigurator } from "./host-configurator/host-configurator.componen
     D3Service,
     GraphService,
     NetworkService,
-    ValidatorService,
     GraphApiService,
     GetGraphApiHelperService
   ],

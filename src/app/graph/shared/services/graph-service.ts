@@ -43,15 +43,15 @@ export class GraphService {
 
     if (node1 instanceof PcNode && node2 instanceof RouterNode) return false;
 
-    if (node1 instanceof RouterNode && node2 instanceof SwitchNode) {
-      if (this.hasRouterSwitch(node1, links)) return false;
-      if (this.hasSwitchRouter(node2, links)) return false;
-    }
+    // if (node1 instanceof RouterNode && node2 instanceof SwitchNode) {
+    //   if (this.hasRouterSwitch(node1, links)) return false;
+    //   if (this.hasSwitchRouter(node2, links)) return false;
+    // }
 
-    if (node1 instanceof SwitchNode && node2 instanceof RouterNode) {
-      if (this.hasRouterSwitch(node2, links)) return false;
-      if (this.hasSwitchRouter(node1, links)) return false;
-    }
+    // if (node1 instanceof SwitchNode && node2 instanceof RouterNode) {
+    //   if (this.hasRouterSwitch(node2, links)) return false;
+    //   if (this.hasSwitchRouter(node1, links)) return false;
+    // }
 
     return true;
   }

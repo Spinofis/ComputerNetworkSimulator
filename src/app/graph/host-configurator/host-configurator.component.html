@@ -4,33 +4,13 @@
 <form [formGroup]="configurationForm" (ngSubmit)="save()">
   <div class="modal-body">
     <div class="form-group">
-      <label for="Ip">IP</label>
-      <input formControlName="Ip" type="text" class="form-control" />
+      <label for="HostIdentity">Identyfikator hosta <small>(nazwa lub ip)</small></label>
+      <input formControlName="HostIdentity" type="text" class="form-control" />
       <small
-        *ngIf="!f.Ip.valid && submitted"
+        *ngIf="!f.HostIdentity.valid && submitted"
         id="passwordHelp"
         class="text-danger"
-        >Ip jest niepoprawne</small
-      >
-    </div>
-    <!-- <div class="form-group">
-      <label for="Mask">Maska podsieci</label>
-      <input formControlName="Mask" type="text" class="form-control" />
-      <small
-        *ngIf="!f.Mask.valid && submitted"
-        id="passwordHelp"
-        class="text-danger"
-        >Maska jest niepoprawna</small
-      >
-    </div> -->
-    <div class="form-group">
-      <label for="Gateway">Brama</label>
-      <input formControlName="Gateway" type="text" class="form-control" />
-      <small
-        *ngIf="!f.Gateway.valid && submitted"
-        id="passwordHelp"
-        class="text-danger"
-        >Brama jest niepoprawne</small
+        >Wprowadzony identyfikator hosta jest niepoprawny</small
       >
     </div>
   </div>

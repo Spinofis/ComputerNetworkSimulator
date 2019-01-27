@@ -4,4 +4,5 @@ export class Router {
   public nodeNumber: string;
   public routerNumber: number;
   public name: string;
+  public hostIdentity:string;
 }

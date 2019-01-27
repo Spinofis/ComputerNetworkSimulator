@@ -24,7 +24,6 @@ import { ActivatedRoute } from "@angular/router";
 import { takeUntil } from "rxjs/operators";
 import { GetGraphApiHelperService } from "../shared/services/get-api-graph-helper.service";
 import { Simulation } from "../shared/model/dto/simulation";
-import { ValidatorService } from "../shared/services/validator-service";
 import { HostConfigurator } from "../host-configurator/host-configurator.component";
 
 @Component({
@@ -61,7 +60,6 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
     private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
     private getGraphApiHelperService: GetGraphApiHelperService,
-    private validatorService: ValidatorService
   ) {}
 
   ngOnInit() {

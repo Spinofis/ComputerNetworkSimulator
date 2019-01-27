@@ -18,6 +18,8 @@ export abstract class Node implements d3.SimulationNodeDatum {
   nodeSimulationState: NodeSimulationState = NodeSimulationState.none;
   connectedNodes: Node[] = [];
 
+  public hostIdentity: string;
+
   constructor(id) {
     this.id = id;
   }

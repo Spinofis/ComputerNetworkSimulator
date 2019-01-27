@@ -3,4 +3,5 @@ export class Switch {
   public nodeNumber: string;
   public switchNumber: number;
   public name: string;
+  public hostIdentity:string;
 }

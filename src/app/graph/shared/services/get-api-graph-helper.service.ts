@@ -43,6 +43,7 @@ export class GetGraphApiHelperService {
     pcs.forEach(element => {
       let pcNode = new PcNode(element.nodeNumber, element.pcNumber);
       pcNode.databaseId = element.id;
+      pcNode.hostIdentity = element.hostIdentity;
       pcNodes.push(pcNode);
     });
 
@@ -54,6 +55,7 @@ export class GetGraphApiHelperService {
     routers.forEach(element => {
       let router = new RouterNode(element.nodeNumber, element.routerNumber);
       router.databaseId = element.id;
+      router.hostIdentity = element.hostIdentity;
       routerNodes.push(router);
     });
 
@@ -65,6 +67,7 @@ export class GetGraphApiHelperService {
     switches.forEach(element => {
       let switchNode = new SwitchNode(element.nodeNumber, element.switchNumber);
       switchNode.databaseId = element.id;
+      switchNode.hostIdentity = element.hostIdentity;
       switchesNodes.push(switchNode);
     });
 
