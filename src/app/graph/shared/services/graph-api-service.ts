@@ -7,7 +7,7 @@ import { ApiUrl } from "../enums/api-url";
 import { Observable, of, BehaviorSubject } from "rxjs";
 import { SaveGrapHelperService } from "./save-graph-helper-service";
 import { HttpParams } from "@angular/common/http";
-import { disableBindings } from '@angular/core/src/render3';
+import { disableBindings } from "@angular/core/src/render3";
 
 @Injectable()
 export class GraphApiService extends BaseService {
@@ -37,5 +37,16 @@ export class GraphApiService extends BaseService {
     let httpParams = new HttpParams().set("simId", simId.toString());
     var obj = this.get(ApiUrl.getSimulation, httpParams);
     return obj;
+  }
+
+  public pingHost(hostIdentity: string) {
+    var request = new XMLHttpRequest();
+    request.open(
+      "GET",
+      this.baseUrl + ApiUrl.pingHost + "/" + hostIdentity,
+      false
+    ); // `false` makes the request synchronous
+    request.send(null);
+    return request.response;
   }
 }

@@ -25,6 +25,7 @@ import { takeUntil } from "rxjs/operators";
 import { GetGraphApiHelperService } from "../shared/services/get-api-graph-helper.service";
 import { Simulation } from "../shared/model/dto/simulation";
 import { HostConfigurator } from "../host-configurator/host-configurator.component";
+import { __await } from "tslib";
 
 @Component({
   selector: "graph",
@@ -59,7 +60,7 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
     private ref: ChangeDetectorRef,
     private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
-    private getGraphApiHelperService: GetGraphApiHelperService,
+    private getGraphApiHelperService: GetGraphApiHelperService
   ) {}
 
   ngOnInit() {
@@ -225,7 +226,7 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
     (modalRef.componentInstance as HostConfigurator).setNode(node);
   }
 
-  onStartSimulation(e) {
+  async onStartSimulation(e) {
     this.clearSimulationMarks();
     this.graphService.setConnectedNodesForAllNodes(this.nodes, this.links);
     const modalRef = this.modalService.open(StartSimulationComponent);

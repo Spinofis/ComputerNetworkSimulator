@@ -43,43 +43,7 @@ export class GraphService {
 
     if (node1 instanceof PcNode && node2 instanceof RouterNode) return false;
 
-    // if (node1 instanceof RouterNode && node2 instanceof SwitchNode) {
-    //   if (this.hasRouterSwitch(node1, links)) return false;
-    //   if (this.hasSwitchRouter(node2, links)) return false;
-    // }
-
-    // if (node1 instanceof SwitchNode && node2 instanceof RouterNode) {
-    //   if (this.hasRouterSwitch(node2, links)) return false;
-    //   if (this.hasSwitchRouter(node1, links)) return false;
-    // }
-
     return true;
-  }
-
-  private hasRouterSwitch(routerNode: Node, links: Link[]): boolean {
-    let has: boolean = false;
-
-    links.forEach(element => {
-      if (element.source == routerNode && element.target instanceof SwitchNode)
-        has = true;
-      if (element.target == routerNode && element.source instanceof SwitchNode)
-        has = true;
-    });
-
-    return has;
-  }
-
-  private hasSwitchRouter(switchNode: Node, links: Link[]): boolean {
-    let has: boolean = false;
-
-    links.forEach(element => {
-      if (element.source == switchNode && element.target instanceof RouterNode)
-        has = true;
-      if (element.target == switchNode && element.source instanceof RouterNode)
-        has = true;
-    });
-
-    return has;
   }
 
   public deleteNode(node: Node, links: Link[], nodes: Node[]) {

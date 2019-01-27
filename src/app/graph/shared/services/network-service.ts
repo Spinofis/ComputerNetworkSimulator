@@ -5,14 +5,18 @@ import { Node } from "../model/d3/node";
 import { SimulationPath } from "../model/network/simulation-path";
 import { ForceDirectedGraph } from "../model/d3/force-directed-graph";
 import { SwitchNode } from "../model/d3/switch-node";
+import { GraphApiService } from "./graph-api-service";
 
 @Injectable()
 export class NetworkService {
   private allSimulationPaths: SimulationPath[] = [];
+  private correctSimulationPaths: SimulationPath[] = [];
   private simulationPath: SimulationPath;
   private visitedNodes: Node[];
   private graph: ForceDirectedGraph;
+  private index: number = 0;
 
+  constructor(private apiService: GraphApiService) {}
 
   public startSimulation(
     startNode: Node,
@@ -27,14 +31,17 @@ export class NetworkService {
     this.visitedNodes = [];
     let pathNodes: Node[] = [];
     this.allSimulationPaths = [];
+    this.correctSimulationPaths = [];
     this.dfs(startNode, endNode, nodes, pathNodes);
-    this.simulationPath = this.getCorrectSimulationPathFromAll(
-      this.allSimulationPaths
-    );
+    // this.simulationPath = this.getCorrectSimulationPathFromAll(
+    //   this.allSimulationPaths
+    // );
+
     this.setBaseSateToAllNodes(nodes);
-    if (this.isPathInOneNetwork(this.simulationPath))
-      this.simulationPath = this.corigatePath(this.simulationPath);
-    this.goFormNodeToNode(this.simulationPath);
+    this.setCorrectSimulationPath(this.allSimulationPaths);
+    // if (this.isPathInOneNetwork(this.simulationPath))
+    //   this.simulationPath = this.corigatePath(this.simulationPath);
+    this.goFormNodeToNode();
   }
 
   private dfs(
@@ -70,21 +77,14 @@ export class NetworkService {
 
   //correct that means, taht there is no pc node in path between start and end node
 
-  private getCorrectSimulationPathFromAll(
-    allPaths: SimulationPath[]
-  ): SimulationPath {
+  private setCorrectSimulationPath(allPaths: SimulationPath[]): SimulationPath {
     if (!allPaths) throw new Error("Incorrect parameter allPaths");
 
     let correctPath: SimulationPath = null;
 
     allPaths.forEach(element => {
       if (this.isPathFromNodeToNodeCorect(element)) {
-        if (!correctPath) {
-          correctPath = element;
-        } else {
-          if (element.nodes.length < correctPath.nodes.length)
-            correctPath = element;
-        }
+        this.correctSimulationPaths.push(element);
       }
     });
     return correctPath;
@@ -107,11 +107,34 @@ export class NetworkService {
     return true;
   }
 
-  private goFormNodeToNode(simulationPath: SimulationPath) {
-    simulationPath.nodes.forEach(element => {
-      element.setCorrect();
-    });
-    this.graph.simulation.restart();
+  private goFormNodeToNode() {
+    this.index == 0;
+    for (var i = 0; i < this.correctSimulationPaths.length; i++) {
+      let path = this.correctSimulationPaths[i];
+      this.index == 0;
+      this.pingHosts(0, path.nodes);
+      if (this.index == path.nodes.length) {
+        break;
+      }
+    }
+  }
+
+  pingHosts(index: number, nodes: Node[]) {
+    setTimeout(() => {
+      var isAvaiable = this.apiService.pingHost(nodes[index].hostIdentity);
+      if (isAvaiable == "true") {
+        nodes[index].setCorrect();
+      } else {
+        nodes[index].setInvalid();
+        alert("Host" + nodes[index].getName() + " jest niedostępny");
+      }
+      index++;
+      this.graph.simulation.restart();
+      if (index >= nodes.length) {
+        this.index = index;
+        return;
+      } else this.pingHosts(index, nodes);
+    }, 100);
   }
 
   private setBaseSateToAllNodes(nodes: Node[]) {
@@ -145,6 +168,4 @@ export class NetworkService {
     });
     return newPath;
   }
-
-  
 }

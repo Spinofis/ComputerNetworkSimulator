@@ -9,7 +9,7 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class BaseService {
-  private baseUrl: string = "https://localhost:44372/api";
+  protected baseUrl: string = "https://localhost:44372/api";
 
   constructor(private http: HttpClient) {}
 
