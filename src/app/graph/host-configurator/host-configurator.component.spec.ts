@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LogWindowComponent } from './log-window.component';
+import { HostConfigurator } from './host-configurator.component';
 
-describe('LogWindowComponent', () => {
-  let component: LogWindowComponent;
-  let fixture: ComponentFixture<LogWindowComponent>;
+describe('PcConfiguratorComponent', () => {
+  let component: HostConfigurator;
+  let fixture: ComponentFixture<HostConfigurator>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LogWindowComponent ]
+      declarations: [ HostConfigurator ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LogWindowComponent);
+    fixture = TestBed.createComponent(HostConfigurator);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,8 +1,6 @@
 import { Pc } from "./pc";
 import { Router } from "./router";
 import { Switch } from "./switch";
-import { PcSwitch } from "./pc-switch";
-import { RouterSwitch } from "./router-switch";
 import { LinkDto } from './link';
 
 export class Simulation {
@@ -13,6 +11,4 @@ export class Simulation {
   public routers: Router[];
   public switches: Switch[];
   public links:LinkDto[];
-  // public routerSwitches: RouterSwitch[];
-  // public pcSwitches: PcSwitch[];
 }

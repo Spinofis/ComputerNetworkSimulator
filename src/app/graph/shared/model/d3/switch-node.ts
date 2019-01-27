@@ -1,10 +1,8 @@
 import { Node } from "./node";
 import { NodeColor } from "../../enums/node-color";
-import { Host } from "../../interfaces/host";
-import { HostConfiguration } from "../../abstract/host-configuration";
 import { NodeSimulationState } from "../../enums/node-simulation-state";
 
-export class SwitchNode extends Node implements Host {
+export class SwitchNode extends Node   {
   public switchNumber: number;
   public radius: number = 75;
   nodeColor = NodeColor.switch;
@@ -55,13 +53,5 @@ export class SwitchNode extends Node implements Host {
   public setNoneSimulationSate() {
     this.nodeSimulationState = NodeSimulationState.none;
     this.setBaseView();
-  }
-
-  public setConfiguration(config: HostConfiguration) {
-    // this.pcConfiguration = config as PcConfiguration;
-  }
-
-  public getConfiguration() {
-    return null;
   }
 }

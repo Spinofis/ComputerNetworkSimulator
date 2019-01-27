@@ -1,23 +1,19 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { HostConfigurator } from "../shared/interfaces/host-configurator";
 import { Node } from "../shared/model/d3/node";
-import { PcConfiguration } from "../shared/model/network/pc-configuration";
-import { PcNode } from "../shared/model/d3/pc-node";
 import { ValidatorService } from "../shared/services/validator-service";
 import {
   FormBuilder,
   FormGroup,
   Validators,
-  AbstractControl
 } from "@angular/forms";
 
 @Component({
-  selector: "app-pc-configurator",
-  templateUrl: "./pc-configurator.component.html",
-  styleUrls: ["./pc-configurator.component.scss"]
+  selector: "app-host-configurator",
+  templateUrl: "./host-configurator.component.html",
+  styleUrls: ["./host-configurator.component.scss"]
 })
-export class PcConfiguratorComponent implements OnInit, HostConfigurator {
+export class HostConfigurator implements OnInit {
   submitted: boolean = false;
   configurationForm: FormGroup;
   node: Node;
@@ -64,14 +60,14 @@ export class PcConfiguratorComponent implements OnInit, HostConfigurator {
   }
 
   loadForm() {
-    if (this.node) {
-      let pcConfig: PcConfiguration = this.node.getConfiguration();
-      if (pcConfig) {
-        this.f["Ip"].setValue(pcConfig.ip);
-        // this.f["Mask"].setValue(pcConfig.mask);
-        this.f["Gateway"].setValue(pcConfig.gateway);
-      }
-    }
+    // if (this.node) {
+    //   let pcConfig: PcConfiguration = this.node.getConfiguration();
+    //   if (pcConfig) {
+    //     this.f["Ip"].setValue(pcConfig.ip);
+    //     // this.f["Mask"].setValue(pcConfig.mask);
+    //     this.f["Gateway"].setValue(pcConfig.gateway);
+    //   }
+    // }
   }
 
   get f() {
@@ -79,18 +75,18 @@ export class PcConfiguratorComponent implements OnInit, HostConfigurator {
   }
 
   save() {
-    this.submitted = true;
-    if (
-      this.node &&
-      !this.validatorService.hasControlErrors(this.configurationForm)
-    ) {
-      let pcConfiguration: PcConfiguration = new PcConfiguration();
-      pcConfiguration.ip = this.f["Ip"].value;
-      // pcConfiguration.mask = this.f["Mask"].value;
-      pcConfiguration.gateway = this.f["Gateway"].value;
-      this.node.setConfiguration(pcConfiguration);
-      this.activeModal.close();
-    }
+    // this.submitted = true;
+    // if (
+    //   this.node &&
+    //   !this.validatorService.hasControlErrors(this.configurationForm)
+    // ) {
+    //   let pcConfiguration: PcConfiguration = new PcConfiguration();
+    //   pcConfiguration.ip = this.f["Ip"].value;
+    //   // pcConfiguration.mask = this.f["Mask"].value;
+    //   pcConfiguration.gateway = this.f["Gateway"].value;
+    //   this.node.setConfiguration(pcConfiguration);
+    //   this.activeModal.close();
+    // }
   }
 
   btnCancel_Click(e) {

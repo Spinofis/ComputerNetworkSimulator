@@ -16,7 +16,6 @@ import { D3Service } from "../shared/services/d3.service";
 import { GraphEditMode } from "../shared/enums/graph-edit-mode";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { NetworkService } from "../shared/services/network-service";
-import { HostConfigurator } from "../shared/interfaces/host-configurator";
 import { StartSimulationComponent } from "../start-simulation/start-simulation.component";
 import { NetworkSimulation } from "../shared/model/network/network-simulation";
 import { GraphApiService } from "../shared/services/graph-api-service";
@@ -25,8 +24,8 @@ import { ActivatedRoute } from "@angular/router";
 import { takeUntil } from "rxjs/operators";
 import { GetGraphApiHelperService } from "../shared/services/get-api-graph-helper.service";
 import { Simulation } from "../shared/model/dto/simulation";
-import { LogWindowComponent } from "../log-window/log-window.component";
 import { ValidatorService } from "../shared/services/validator-service";
+import { HostConfigurator } from "../host-configurator/host-configurator.component";
 
 @Component({
   selector: "graph",
@@ -44,7 +43,6 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
   clickedNode2: Node;
   clickedNodeCount: number = 0;
   networkSimulation: NetworkSimulation;
-  simulationErrors: string[] = [];
   public databaseSimulationId: number = 0;
   private subscriptionRoute = new Subject();
   private subscriptionApi = new Subject();
@@ -219,9 +217,7 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private configurateHost(node: Node) {
-    const modalRef = this.modalService.open(
-      this.networkService.getHostConfiguratorWindow(node)
-    );
+    const modalRef = this.modalService.open(HostConfigurator);
     let connectedNodes: Node[] = this.graphService.getConnectedNodes(
       node,
       this.nodes,
@@ -239,11 +235,7 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
       this.graphService.getPcNodesFormNodes(this.nodes)
     );
     modalRef.result.then(networkSimulation => {
-      this.simulationErrors = this.validatorService.validateSimulation(
-        this.nodes
-      );
-      // debugger;
-      if (networkSimulation && this.simulationErrors.length == 0) {
+      if (networkSimulation) {
         this.networkService.startSimulation(
           networkSimulation.nodeFrom,
           networkSimulation.nodeTo,
@@ -260,13 +252,6 @@ export class GraphComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(data => {
         alert("Zapisano symulacje");
       });
-  }
-
-  onLogSimulation(e) {
-    const modalRef = this.modalService.open(LogWindowComponent);
-    (modalRef.componentInstance as LogWindowComponent).setValidationResult(
-      this.simulationErrors
-    );
   }
 
   private loadSimulation(simulation: Simulation) {

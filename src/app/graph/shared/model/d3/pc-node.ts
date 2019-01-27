@@ -1,12 +1,8 @@
 import { Node } from "./node";
 import { NodeColor } from "../../enums/node-color";
-import { PcConfiguration } from "../network/pc-configuration";
-import { Host } from "../../interfaces/host";
-import { HostConfiguration } from "../../abstract/host-configuration";
 import { NodeSimulationState } from "../../enums/node-simulation-state";
 
-export class PcNode extends Node implements Host {
-  public pcConfiguration: PcConfiguration;
+export class PcNode extends Node   {
   public pcNumber: number;
   radius: number = 60;
   nodeColor = NodeColor.pc;
@@ -56,13 +52,5 @@ export class PcNode extends Node implements Host {
   public setNoneSimulationSate() {
     this.nodeSimulationState = NodeSimulationState.none;
     this.setBaseView();
-  }
-
-  public setConfiguration(config: HostConfiguration) {
-    this.pcConfiguration = config as PcConfiguration;
-  }
-
-  public getConfiguration() {
-    return this.pcConfiguration;
   }
 }

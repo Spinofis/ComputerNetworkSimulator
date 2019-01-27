@@ -9,8 +9,6 @@ import { LinkVisualComponent } from "./link-visual/link-visual.component";
 import { NodeVisualComponent } from "./node-visual/node-visual.component";
 import { CommonModule } from "@angular/common";
 import { GraphMenu } from "./graph-menu/graph-menu.component";
-import { PcConfiguratorComponent } from "./pc-configurator/pc-configurator.component";
-import { RouterConfiguratorComponent } from "./router-configurator/router-configurator.component";
 import { NetworkService } from "./shared/services/network-service";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { ValidatorService } from "./shared/services/validator-service";
@@ -20,7 +18,7 @@ import { StartSimulationComponent } from "./start-simulation/start-simulation.co
 import { GraphSavedListComponent } from "./graph-saved-list/graph-saved-list.component";
 import { GraphApiService } from "./shared/services/graph-api-service";
 import { GetGraphApiHelperService } from "./shared/services/get-api-graph-helper.service";
-import { LogWindowComponent } from "./log-window/log-window.component";
+import { HostConfigurator } from "./host-configurator/host-configurator.component";
 
 @NgModule({
   imports: [
@@ -37,11 +35,9 @@ import { LogWindowComponent } from "./log-window/log-window.component";
     DraggableDirective,
     ZoomableDirective,
     GraphMenu,
-    PcConfiguratorComponent,
-    RouterConfiguratorComponent,
     StartSimulationComponent,
-    LogWindowComponent,
     GraphSavedListComponent,
+    HostConfigurator
   ],
   providers: [
     D3Service,
@@ -51,11 +47,6 @@ import { LogWindowComponent } from "./log-window/log-window.component";
     GraphApiService,
     GetGraphApiHelperService
   ],
-  entryComponents: [
-    PcConfiguratorComponent,
-    RouterConfiguratorComponent,
-    StartSimulationComponent,
-    LogWindowComponent
-  ]
+  entryComponents: [StartSimulationComponent, HostConfigurator]
 })
 export class GraphModule {}
